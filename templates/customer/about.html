@@ -1,0 +1,150 @@
+{% extends 'main.html' %} {% load static %}
+{%block title %} A propos {%endblock%}
+{%block content %}
+
+<main id="main">
+
+    <!-- ======= About Us Section ======= -->
+    <section class="breadcrumbs">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>A Propos</li>
+                </ol>
+            </div>
+
+        </div>
+    </section>
+    <!-- End About Us Section -->
+    <!-- ======= Service Details Section ======= -->
+    <section class="service-details">
+        <div class="container">
+            <div class="section-title">
+                <h2>Qui sommes nous?</h2>
+                <p>Créé en 2016, IT Services & Solutions est un écosystème d’innovation
+                     et une communauté pour les personnes qui souhaitent co-créer et
+                      collaborer sur des projets visant à résoudre des problèmes critiques
+                       au niveau national et international. Notre mission est de promouvoir
+                        une culture de l'entrepreneuriat ancrée dans l'innovation, la créativité
+                         et le partage. A IT Services & Solutions, nous offrons plusieurs solutions
+                          : le développement web, les solutions web, les infrastructures réseaux et sécurité,
+                           l’ingénierie des produits et services , le Big Data et Business intelligent Analytique,
+                            le Conseil et Audit Informatique ainsi que des formations. Notre processus métier est 
+                            composer de : Service financier et comptable, Administration RH et support global de paie,
+                             Traduction de documents, Gestion des contrats, Renouvèlement de contrats et la gestion des commandes, 
+                             Services juridiques, Secrétariat et support de conformité .Notre communauté comprend des entrepreneurs,
+                              des concepteurs, des développeurs, des spécialistes du marketing, et nous avons actuellement 1 site à Cotonou
+                               (Bénin) : Lot 132 Sodjeatinmin, Maison GBAGUIDI.</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="{% static 'assets/img/service-details-1.jpg' %}" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="#">Notre Mission</a></h5>
+                            <p class="card-text">Notre mission est de créer un écosystème favorable à la co-création et à l’émergence de solutions d’envergure mondiale.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="{% static 'assets/img/service-details-2.jpg' %}" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="#">Notre Plan</a></h5>
+                            <p class="card-text">A travers ses différents programmes de formation, IT Services & Solutions participe à la création de valeur ajoutée dans l’écosystème entrepreneurial tech et se donne pour mission de créer une génération de <b>« success stories »</b> dans le numérique.</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="{% static 'assets/img/service-details-3.jpg' %}" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="#">Notre Vision</a></h5>
+                            <p class="card-text">Les programmes de formations de de processus métiers de IT Services & Solutions apportent un soutien technique, un mentorat de haute qualité, pour accompagner les entrepreneurs numériques et toute personne assoiffée de la connaissance.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-stretch" data-aos="fade-up">
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="{% static 'assets/img/service-details-4.jpg' %}" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="#">Notre Objectif</a></h5>
+                            <p class="card-text">IT Services & Solutions propose aux entreprises, particuliers, organisations non gouvernementales et gouvernements des solutions sur-mesure et adaptées à leurs structures afin de les aider à atteindre leurs objectifs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- End Service Details Section -->
+    <!-- ======= About Section ======= -->
+    <section class="about" data-aos="fade-up">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <img src="{% static 'assets/img/itss/image-asset.jpeg' %}" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-6 pt-4 pt-lg-0">
+                    <h3>Comment fonctionne ITSS?</h3>
+                    <p class="font-italic">
+                        Nous travaillons selon une procédure bien déterminée afin d’offrir des services de qualités et garantir la satisfaction de nos clients.
+                    </p>
+                    <ul>
+                        <li><i class="icofont-check-circled"></i> Analyse de problème</li>
+                        <li><i class="icofont-check-circled"></i> Proposition de solution</li>
+                        <li><i class="icofont-check-circled"></i> Développement de la solution</li>
+                        <li><i class="icofont-check-circled"></i> Livraison de la solution</li>
+                    </ul>
+                    
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- End About Section -->
+
+    <!-- ======= Facts Section ======= -->
+    <section class="facts section-bg" data-aos="fade-up">
+        <div class="container">
+
+            <div class="row counters">
+
+                <div class="col-lg-4 col-6 text-center">
+                    <span data-toggle="counter-up">232</span>
+                    <p>Clients</p>
+                </div>
+
+                <div class="col-lg-4 col-6 text-center">
+                    <span data-toggle="counter-up">521</span>
+                    <p>Projets</p>
+                </div>
+
+
+                <div class="col-lg-4 col-6 text-center">
+                    <span data-toggle="counter-up">15</span>
+                    <p>Employés vaillants</p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <!-- End Facts Section -->
+
+</main>
+
+{%endblock%}
