@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'frontend',
+    'service',
+    'account',
+
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -71,14 +75,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'itss.wsgi.application'
 
+AUTH_USER_MODEL = 'account.User'
+
+swappable = 'AUTH_USER_MODEL'
+
+AUTHENTICATION_BACKENDS = [
+    'account.auth.UserBackend',
+    ]
+
+PHONENUMBER_DB_FORMAT = "INTERNATIONAL"
+
+PHONENUMBER_DEFAULT_REGION = "BJ"
+
+PHONENUMBER_DEFAULT_FORMAT = "INTERNATIONAL"
+
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'itss',
+        'USER': 'postgres',
+        'PASSWORD': 'aymart',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -105,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'fr-fr'
+LANGUAGE_CODE = 'fr'
 
 TIME_ZONE = 'UTC'
 
@@ -124,6 +146,9 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
+MEDIA_URL = '/media/' 
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
