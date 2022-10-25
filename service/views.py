@@ -9,6 +9,8 @@ from itss.settings import EMAIL_HOST_USER
 # Create your views here.
 
 def asking_entreprise(request):
+    domains  = DomainActivity.objects.filter(is_visible=True)
+    effectifs = EntrepriseEffectif.objects.filter(is_visible=True)
     form = EntrepriseAskingForm()
     if request.method == 'POST':
         form = EntrepriseAskingForm(request.POST)
@@ -56,7 +58,7 @@ def asking_entreprise(request):
                 send_mail(subject, 
                 message, EMAIL_HOST_USER, [entreprise.email], fail_silently = False)
             return redirect('home')
-    context = {'form':form}
+    context = {'form':form, 'effectifs': effectifs, 'domains':domains}
     return render(request, 'service/asking_entreprise.html', context)
 
 def asking_personnel(request):
