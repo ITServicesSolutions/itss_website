@@ -1,0 +1,91 @@
+{% extends 'main.html' %} {% load static %}
+{%block title %} Demander un service {%endblock%}
+{%block content %}
+
+<main id="main">
+
+    <!-- ======= Contact Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Personnel</h2>
+          <ol>
+            <li><a href="/">Accueil</a></li>
+            <li>Service</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section class="contact" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col-lg-4">
+
+            <div class="row">
+                <img src="{% static 'assets/img/itss/slide-cours.svg' %}" class="img-fluid" alt="">
+            </div>
+
+          </div>
+
+          <div class="col-lg-8">
+            <form action="" method="POST" role="form" class="php-email-form">
+              {% csrf_token %}
+              <div class="form-row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Nom de l'entreprise" />
+                  <div class="validate"></div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="text" name="domain" class="form-control" id="name" placeholder="Secteur d'activité" />
+                  <div class="validate"></div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-6 form-group">
+                  <input type="email" name="email" class="form-control" data-rule="required" data-msg="Email obligatoire" id="name" placeholder="Entrez votre email" />
+                  <div class="validate"></div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="tel" name="phone" class="form-control" data-rule="required" data-msg="Numéro de téléphone obligatoire" id="name" placeholder="Entrez votre contact" />
+                  <div class="validate"></div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-6 form-group">
+                  <input type="email" name="email" class="form-control" data-rule="required" data-msg="Email obligatoire" id="name" placeholder="Effectif" />
+                  <div class="validate"></div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="tel" name="phone" class="form-control" data-rule="required" data-msg="Numéro de téléphone obligatoire" id="name" placeholder="Lien" />
+                  <div class="validate"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" name="message" rows="3" data-rule="required" data-msg="Inscrivez votre demande" placeholder="Message"></textarea>
+                <div class="validate"></div>
+              </div>
+              <div class="mb-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Votre message a été envoyer avec succès. Félicitations</div>
+              </div>
+              <div class="text-center"><button type="submit">Envoyer</button></div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main>
+  <!-- End #main -->
+
+
+{%endblock%}

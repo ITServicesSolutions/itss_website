@@ -29,7 +29,7 @@ class Customer(models.Model):
         verbose_name_plural = _("Customers")
 
     def __str__(self):
-        return self.name
+        return self.email
 
     def get_absolute_url(self):
         return reverse("Customer_detail", kwargs={"pk": self.pk})
@@ -61,7 +61,7 @@ class EntrepriseEffectif(models.Model):
         verbose_name_plural = _("EntrepriseEffectifs")
 
     def __str__(self):
-        return self.name
+        return self.interval_range
 
     def get_absolute_url(self):
         return reverse("EntrepriseEffectif_detail", kwargs={"pk": self.pk})

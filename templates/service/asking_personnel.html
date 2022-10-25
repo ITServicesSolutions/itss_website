@@ -1,5 +1,5 @@
 {% extends 'main.html' %} {% load static %}
-{%block title %} Contact {%endblock%}
+{%block title %} Demander un service {%endblock%}
 {%block content %}
 
 <main id="main">
@@ -9,10 +9,10 @@
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Contact</h2>
+          <h2>Personnel</h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li>Contact</li>
+            <li><a href="/">Accueil</a></li>
+            <li>Service</li>
           </ol>
         </div>
 
@@ -25,7 +25,7 @@
 
         <div class="row">
 
-          <div class="col-lg-6">
+          <div class="col-lg-4">
 
             <div class="row">
                 <img src="{% static 'assets/img/itss/slide-cours.svg' %}" class="img-fluid" alt="">
@@ -33,20 +33,31 @@
 
           </div>
 
-          <div class="col-lg-6">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+          <div class="col-lg-8">
+            <form action="" method="POST" role="form" class="php-email-form">
+              {% csrf_token %}
               <div class="form-row">
                 <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Entrez votre nom" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                  <input type="text" name="first_name" class="form-control" id="name" placeholder="Entrez votre prenom" />
                   <div class="validate"></div>
                 </div>
                 <div class="col-md-6 form-group">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Entrez votre email" data-rule="email" data-msg="Please enter a valid email" />
+                  <input type="text" name="last_name" class="form-control" id="name" placeholder="Entrez votre nom" />
+                  <div class="validate"></div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-6 form-group">
+                  <input type="email" name="email" class="form-control" data-rule="required" data-msg="Email obligatoire" id="name" placeholder="Entrez votre email" />
+                  <div class="validate"></div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="tel" name="phone" class="form-control" data-rule="required" data-msg="Numéro de téléphone obligatoire" id="name" placeholder="Entrez votre contact" />
                   <div class="validate"></div>
                 </div>
               </div>
               <div class="form-group">
-                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                <textarea class="form-control" name="message" rows="3" data-rule="required" data-msg="Inscrivez votre demande" placeholder="Message"></textarea>
                 <div class="validate"></div>
               </div>
               <div class="mb-3">

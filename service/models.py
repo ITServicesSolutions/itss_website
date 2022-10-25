@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
-from account.models import Customer
+from account.models import Customer, Entreprise
+
 # Create your models here.
 
 class ServiceType(models.Model):
@@ -30,7 +31,16 @@ class Service(models.Model):
 
     customer = models.ForeignKey(
         Customer,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null = True,
+        blank = True
+    )
+
+    entreprise = models.ForeignKey(
+        Entreprise,
+        on_delete=models.CASCADE,
+        null = True,
+        blank = True
     )
     text = models.TextField()
     view = models.BooleanField(default=False)

@@ -31,7 +31,19 @@
 </head>
 
 <body>
-
+    <div class="modal fade" id="asking" tabindex="-1" aria-labelledby="asking" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+                <div class="row p-2">
+                    <a href="{% url 'ask-entreprise' %}" class="col-sm-12 btn btn-danger text-center m-1">Je suis une entreprise</a>
+                    <a href="{% url 'ask-personnel' %}" class="col-sm-12 btn btn-dark text-center m-1">Je suis une peronne</a>
+                </div>
+                
+            </div>
+          </div>
+        </div>
+    </div>
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top {{header}}">
         <div class="container">
@@ -48,9 +60,11 @@
                     <li><a href="{% url 'projects' %}">Réalisations</a></li>
                     <li><a href="{% url 'about' %}">A Propos</a></li>
                     <li><a href="{% url 'contact' %}">Contact</a></li>
-                    <li class="active"><a href="{% url 'ask-service' %}">Demander un service</a></li>
+                    <li class="active"><a href="#asking" data-toggle="modal" data-target="#asking">Demander un service</a></li>
                 </ul>
             </nav>
+            
+              
             <!-- .nav-menu -->
 
         </div>
