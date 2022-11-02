@@ -15,6 +15,7 @@ def asking_entreprise(request):
     if request.method == 'POST':
         form = EntrepriseAskingForm(request.POST)
         if form.is_valid():
+            print("Hello")
             type = form.cleaned_data['type']
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']

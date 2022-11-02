@@ -34,7 +34,7 @@
           </div>
 
           <div class="col-lg-8">
-            <form action="" method="POST" class="form">
+            <form action="" method="POST">
               {% csrf_token %}
               <div class="form-row">
                 <div class="col-md-6 form-group">
@@ -80,7 +80,6 @@
                 <textarea class="form-control" name="message" rows="3" data-rule="required" data-msg="Inscrivez votre demande" placeholder="Message"></textarea>
                 <div class="validate"></div>
               </div>
-              
               <div class="text-center"><button type="submit" class="btn btn-danger">Envoyer</button></div>
             </form>
           </div>

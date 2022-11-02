@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render
 
 # Create your views here.
@@ -37,3 +38,7 @@ def projects(request):
     header = ''
     context = {'active': active, 'header': header}
     return render(request, 'customer/projects.html', context)
+
+def formation(request):
+    context = {}
+    return render(request, 'customer/formation.html', context)
