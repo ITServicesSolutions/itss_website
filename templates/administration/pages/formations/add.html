@@ -1,0 +1,106 @@
+{% extends 'administration/main.html' %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+    <div class="col-md-12">
+        <div class="row align-items-center my-3">
+        <div class="col">
+            <h2 class="page-title">Ajouter une formation</h2>
+        </div>
+        </div>
+        <div class="file-container border-top">
+        <div class="file-panel mt-4">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">Designation</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="" name="name" placeholder="" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-4">
+                        <textarea class="form-control" id="" name="description" rows="3" ></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">Mode</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="" name="mode" placeholder="" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">Duration</label>
+                    <div class="col-sm-4">
+                      <input type="number" class="form-control" id="" name="duration" placeholder="" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">Certification</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="" name="certification" placeholder="" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">Category</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="category">
+                            <option selected>Select category</option>
+                            {% for category in categories %}
+                            <option value="{{category.id}}">{{category.name}}</option>
+                            {%endfor%}
+                          </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">Bande</label>
+                    <div class="col-sm-4">
+                        <select name="bande" class="form-control">
+                            <option>Select bande</option>
+                            
+                            <option value="Recommandé">Recommandé</option>
+                            <option value="Nouveau">Nouveau</option>
+                            <option value="Populaire">Populaire</option>
+                          </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">Image</label>
+                    <div class="col-sm-10">
+                      <input type="file" class="form-control-file" id="" name="fichier" placeholder="Choississez une image" required>
+                    </div>
+                    </div>
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="is_public" id="" >
+                      <label class="form-check-label" for="gridCheck1">
+                        Active
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="is_principal" id="">
+                        <label class="form-check-label" for="gridCheck1">
+                          Principal
+                        </label>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                  </div>
+                </div>
+              </form>
+        </div> <!-- .file-panel -->
+        
+        </div> <!-- .file-container -->
+    </div> <!-- .col -->
+    </div> <!-- .row -->
+</div> <!-- .container-fluid -->
+{% endblock content %}

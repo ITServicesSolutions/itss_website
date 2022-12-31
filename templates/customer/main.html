@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js" lang="fr">
+
+<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title>{%block title%} Accueil | {%endblock title%} ITSS</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- favicon -->		
+		<link rel="shortcut icon" type="image/x-icon" href="{% static 'customer/img/logo/logo100.png' %}">
+
+		<!-- all css here -->
+
+		<!-- bootstrap v3.3.6 css -->
+		<link rel="stylesheet" href="{% static 'customer/css/bootstrap.min.css' %}">
+		<!-- owl.carousel css -->
+		<link rel="stylesheet" href="{% static 'customer/css/owl.carousel.css' %}">
+		<link rel="stylesheet" href="{% static 'customer/css/owl.transitions.css' %}">
+       <!-- Animate css -->
+        <link rel="stylesheet" href="{% static 'customer/css/animate.css' %}">
+        <!-- meanmenu css -->
+        <link rel="stylesheet" href="{% static 'customer/css/meanmenu.min.css' %}">
+		<!-- font-awesome css -->
+		<link rel="stylesheet" href="{% static 'customer/css/font-awesome.min.css' %}">
+		<link rel="stylesheet" href="{% static 'customer/css/themify-icons.css' %}">
+		<link rel="stylesheet" href="{% static 'customer/css/flaticon.css' %}">
+		<!-- magnific css -->
+        <link rel="stylesheet" href="{% static 'customer/css/magnific.min.css' %}">
+		<!-- style css -->
+		<link rel="stylesheet" href="{% static 'customer/css/style.css' %}">
+		<!-- responsive css -->
+		<link rel="stylesheet" href="{% static 'customer/css/responsive.css' %}">
+
+		<!-- modernizr css -->
+		<script src="{% static 'customer/js/vendor/modernizr-2.8.3.min.js' %}"></script>
+        {% block extrastyle %}{% endblock extrastyle %}
+	</head>
+		<body>
+
+        <div id="preloader"></div>
+        <!-- start header -->
+        {% include 'customer/partials/header.html' %}
+        <!-- header end -->
+        <!-- start content -->
+        {% block content %}{% endblock content %}
+        <!-- content end -->
+        <!-- Start Footer Area -->
+        {% include 'customer/partials/footer.html' %}
+        <!-- End Footer area -->
+		
+		<!-- all js here -->
+
+		<!-- jquery latest version -->
+		<script src="{% static 'customer/js/vendor/jquery-1.12.4.min.js' %}"></script>
+		<!-- bootstrap js -->
+		<script src="{% static 'customer/js/bootstrap.min.js' %}"></script>
+		<!-- owl.carousel js -->
+		<script src="{% static 'customer/js/owl.carousel.min.js' %}"></script>
+		  <!-- stellar js -->
+        <script src="{% static 'customer/js/jquery.stellar.min.js' %}"></script>
+		<!-- magnific js -->
+        <script src="{% static 'customer/js/magnific.min.js' %}"></script>
+        <!-- wow js -->
+        <script src="{% static 'customer/js/wow.min.js' %}"></script>
+        <!-- meanmenu js -->
+        <script src="{% static 'customer/js/jquery.meanmenu.js' %}"></script>
+		<!-- Form validator js -->
+		<script src="{% static 'customer/js/form-validator.min.js' %}"></script>
+		<!-- plugins js -->
+		<script src="{% static 'customer/js/plugins.js' %}"></script>
+		<!-- partner js -->
+		<script src="{% static 'customer/js/testimonials_partners.js'%}"></script>
+		<!-- main js -->
+		<script src="{% static 'customer/js/main.js' %}"></script>
+        {% block extrascript %}{% endblock extrascript %}
+	</body>
+
+</html>

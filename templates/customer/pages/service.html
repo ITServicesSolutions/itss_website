@@ -1,0 +1,49 @@
+{% extends 'customer/main.html' %}
+{% load static %}
+{% block content %}
+<div class="page-area">
+    <div class="breadcumb-overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcrumb text-center">
+                    <div class="section-headline white-headline">
+                        <h3>
+                            Nos services
+                        </h3>
+                    </div>
+                    <ul class="breadcrumb-bg">
+                        <li class="home-bread">Accueil</li>
+                        <li>Service</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Start Support-service Area -->
+<div class="support-service-area fix area-padding-2">
+    <div class="container">
+        <div class="row">
+            <div class="support-all">
+                <!-- Start About -->
+               
+                {% for service in services %}
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="support-services wow ">
+                            <a class="support-images" href="#"><i class="{{service.icone}}"></i></a>
+                            <div class="support-content">
+                                <h4>{{service.name}}</h4>
+                                <p>{{service.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Support-service Area -->
+{% include 'customer/partials/banner.html' %}
+{% endblock content %}

@@ -1,0 +1,53 @@
+{% extends 'administration/main.html' %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+    <div class="col-md-12">
+        <div class="row align-items-center my-3">
+        <div class="col">
+            <h2 class="page-title">Carousels</h2>
+        </div>
+        <div class="col-auto">
+            <a href="{% url 'carousel_add' %}" type="button" class="btn btn-lg btn-secondary">
+                <span class="fe fe-plus fe-16 mr-3"></span>Ajouter
+            </a>
+        </div>
+        </div>
+        <div class="file-container border-top">
+        <div class="file-panel mt-4">
+            <table class="table table-bordered table-responsive">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Active</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for carousel in carousels  %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{carousel.name}}</td>
+                    <td>{{carousel.description}}</td>
+                    <td>
+                        {%if carousel.image %}
+                        <img src="{{carousel.image.url}}" alt="{{carousel.name}}" width="200" height="100">
+                        {%else%} Vide {% endif%}
+                    </td>
+                    <td>{%if carousel.is_active == True %} Yes {%else%} No {% endif%}</td>
+                    <td><a href="#"><i class="fe fe-pencil">Edit</i></a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            
+        </div> <!-- .file-panel -->
+        
+        </div> <!-- .file-container -->
+    </div> <!-- .col -->
+    </div> <!-- .row -->
+</div> <!-- .container-fluid -->
+{% endblock content %}

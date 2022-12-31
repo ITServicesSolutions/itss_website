@@ -1,0 +1,55 @@
+{% extends 'administration/main.html' %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+    <div class="col-md-12">
+        <div class="row align-items-center my-3">
+        <div class="col">
+            <h2 class="page-title">Comments</h2>
+        </div>
+        <div class="col-auto">
+            <a href="{% url 'comment_add' %}" type="button" class="btn btn-lg btn-secondary">
+                <span class="fe fe-plus fe-16 mr-3"></span>Ajouter
+            </a>
+        </div>
+        </div>
+        <div class="file-container border-top">
+        <div class="file-panel mt-4">
+            <table class="table table-bordered table-responsive">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Author full name</th>
+                    <th scope="col">Author role</th>
+                    <th scope="col">Comment</th>
+                    <th scope="col">Author Picture</th>
+                    <th scope="col">Active</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for comment in comments  %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{comment.author_full_name}}</td>
+                    <td>{{comment.author_role}}</td>
+                    <td>{{comment.text}}</td>
+                    <td>
+                        {%if comment.picture %}
+                        <img src="{{comment.picture.url}}" alt="{{comment.text}}" >
+                        {%else%} Vide {% endif%}
+                    </td>
+                    <td>{%if comment.is_public == True %} Yes {%else%} No {% endif%}</td>
+                    <td><a href="#"><i class="fe fe-pencil">Edit</i></a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            
+        </div> <!-- .file-panel -->
+        
+        </div> <!-- .file-container -->
+    </div> <!-- .col -->
+    </div> <!-- .row -->
+</div> <!-- .container-fluid -->
+{% endblock content %}

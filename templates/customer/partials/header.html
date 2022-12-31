@@ -1,0 +1,117 @@
+{% load static %}
+<header class="header-one">
+    <!-- Start top bar -->
+    <div class="topbar-area fix hidden-xs">
+        <div class="container">
+            <div class="row">
+               <div class="col-md-6 col-sm-6">
+                   <div class="topbar-left">
+                        <ul>
+                            <li><a href="mailto:contact@it-servicegroup.com"><i class="fa fa-envelope"></i>contact@it-servicegroup.com</a></li>
+                            <li><a href="tel:+22952525231"><i class="fa fa-phone"></i> +229 52 52 52 31</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class=" col-md-6 col-sm-6">
+                    <div class="topbar-right">
+                        <div class="top-social">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                                <li><a href="#"><i class="fa fa-whatsapp"></i></a></li>
+                            </ul> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End top bar -->
+    <!-- header-area start -->
+    <div id="sticker" class="header-area hidden-xs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="row">
+                        <!-- logo start -->
+                        <div class="col-md-3 col-sm-3">
+                            <div class="logo">
+                                <!-- Brand -->
+                                <a class="navbar-brand page-scroll white-logo" href="{% url 'home' %}">
+                                    {% for logo in logos %}
+                                        {% if not logo.is_black %}
+                                        <img src="{{logo.image.url}}" alt="">
+                                        {% endif %}
+                                    {% endfor %}
+                                </a>
+                                <a class="navbar-brand page-scroll black-logo" href="{% url 'home' %}">
+                                    {% for logo in logos %}
+                                        {% if logo.is_black %}
+                                        <img src="{{logo.image.url}}" alt="">
+                                        {% endif %}
+                                    {% endfor %}
+                                </a>
+                            </div>
+                            <!-- logo end -->
+                        </div>
+                        <div class="col-md-9 col-sm-9">
+                            <div class="header-right-link">
+                                <!-- search option end -->
+                                <a class="s-menu" href="{% url 'login' %}">Connexion</a>
+                            </div>
+                            <!-- mainmenu start -->
+                            <nav class="navbar navbar-default">
+                                <div class="collapse navbar-collapse" id="navbar-example">
+                                    <div class="main-menu">
+                                        <ul class="nav navbar-nav navbar-right">
+                                            <li><a href="{% url 'home' %}">Accueil</a></li>
+                                            <li><a href="{% url 'service' %}">Services</a></li>
+                                            <li><a href="{% url 'formation' %}">Formations</a></li>
+                                            <li><a href="{% url 'about' %}">A propos</a></li>
+                                            <li><a href="{% url 'contact' %}">Contact</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </nav>
+                            <!-- mainmenu end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- header-area end -->
+    <!-- mobile-menu-area start -->
+    <div class="mobile-menu-area hidden-lg hidden-md hidden-sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mobile-menu">
+                        <div class="logo">
+                            <a href="{% url 'home' %}">
+                                {% for logo in logos %}
+                                    {% if logo.is_black %}
+                                        <img src="{{logo.image.url}}" alt="">
+                                    {% endif %}
+                                {% endfor %}
+                            </a>
+                        </div>
+                        <nav id="dropdown">
+                            <ul>
+                                <li><a href="{% url 'home' %}">Accueil</a></li>
+                                <li><a href="{% url 'service' %}">Services</a></li>
+                                <li><a href="{% url 'formation' %}">Formations</a></li>
+                                <li><a href="{% url 'about' %}">A propos</a></li>
+                                <li><a href="{% url 'contact' %}">Contact</a></li>
+                                <li><a href="{% url 'login' %}">Connexion</a></li>
+                            </ul>
+                        </nav>
+                    </div>					
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- mobile-menu-area end -->		
+</header>

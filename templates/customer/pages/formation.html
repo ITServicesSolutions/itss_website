@@ -1,0 +1,54 @@
+{% extends 'customer/main.html' %}
+{% load static %}
+{% block content %}
+<div class="page-area">
+    <div class="breadcumb-overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcrumb text-center">
+                    <div class="section-headline white-headline">
+                        <h3>
+                            Nos formations
+                        </h3>
+                    </div>
+                    <ul class="breadcrumb-bg">
+                        <li class="home-bread">Accueil</li>
+                        <li>Formation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Start Invest area -->
+<div class="invest-area bg-color area-padding-2">
+    <div class="container">
+        <div class="row">
+            <div class="pricing-content">
+                {% for formation in formations %}
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="pri_table_list">
+                        <span class="base">{{formation.get_bande_display}}</span>
+                        <div class="top-price-inner">
+                        <span class="per-day">{{formation.name}}</span>
+                        </div>
+                        <ol class="pricing-text">
+                            <li class="check">{{formation.category}}</li>
+                            <li class="check">Durée : {{formation.duration}}</li>
+                            <li class="check">{{formation.mode}}</li>
+                        </ol>
+                        <div class="price-btn blue">
+                            <a class="blue" href="#">Consulter</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Invest area -->
+{% include 'customer/partials/banner.html' %}
+
+{% endblock content %}

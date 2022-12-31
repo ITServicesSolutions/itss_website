@@ -1,0 +1,72 @@
+{% extends 'customer/main.html' %}
+{% load static %}
+{% block content %}
+<div class="page-area">
+    <div class="breadcumb-overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcrumb text-center">
+                    <div class="section-headline white-headline">
+                        <h3>
+                            Inscription
+                        </h3>
+                    </div>
+                    <ul class="breadcrumb-bg">
+                        <li class="home-bread">Accueil</li>
+                        <li>Inscription</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="signup-area page-padding">
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-12 col-sm-12 col-xs-12">
+                <div class="login-page signup-page">
+                    <div class="login-form signup-form">
+                        <h4 class="login-title ">INSCRIPTION</h4>
+                        <div class="row">
+                            <form id="contactForm" method="POST" action="" class="log-form">
+                                {% csrf_token %}
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <input type="tel" name="phone" id="tel" class="form-control" placeholder="Téléphone" required data-error="Entrez un numéro de téléphone valide">
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email" required data-error="Entrez une adresse mail valide">
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <input type="password" name="password1" id="msg_subject" class="form-control" placeholder="Mot de passe" required data-error="Entrez un mot de passe">
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <input type="password" name="password2" id="msg_subject" class="form-control" placeholder="Confirmer votre mot de passe" required data-error="Mot de passe incorrect">
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <button type="submit" id="submit" class="login-btn">Inscription</button>
+                                    <div id="msgSubmit" class="h3 hidden"></div> 
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="clear"></div>
+                                    <div class="separetor"><span>Ou inscrivez-vous</span></div>
+                                    <div class="sign-icon">
+                                        <ul>
+                                            <li><a class="facebook" href="#">Facebook</a></li>
+                                            
+                                            <li><a class="google" href="#">Google</a></li>
+                                        </ul>
+                                        <div class="acc-not">Vous avez un compte?  <a href="{% url 'login' %}">Connexion</a></div>
+                                    </div>
+                                </div>
+                            </form> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+
+{% endblock content %}

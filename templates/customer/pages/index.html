@@ -1,0 +1,211 @@
+{% extends 'customer/main.html' %}
+{% load static %}
+{% block content %}
+<div class="intro-area">
+    <div class="main-overly"></div>
+     <div class="intro-carousel">
+        {% for carousel in carousels %}
+            <div class="intro-content">
+                <div class="slider-images">
+                    <img src="{{carousel.image.url}}" alt="...">
+                </div>
+                <div class="slider-content">
+                    <div class="display-table">
+                        <div class="display-table-cell">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <!-- Start Slider content -->
+                                        <div class="slide-content text-center">
+                                            <h2 class="title2">{{carousel.description}}</h2>
+                                            <div class="layer-1-3">
+                                                <a href="#" class="ready-btn left-btn" >Découvrir</a>
+                                            </div>
+                                        </div>
+                                        <!-- End Slider content -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+     </div>
+</div>
+<!-- Start Count area -->
+<div class="counter-area fix area-padding-2">
+    <div class="container">
+        <!-- Start counter Area -->
+         <div class="row">
+            <div class="fun-content">
+                {% for service in principals_services %}
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <!-- fun_text  -->
+                    <div class="fun_text">
+                        <span class="counter-icon"><i class="{{service.icone}}"></i></span>
+                        <h4>{{service.name}}</h4>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Count area -->
+<!-- Start Invest area -->
+<div class="invest-area bg-color area-padding-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="section-headline text-center">
+                    <h3>Quelques offres de formation</h3>
+                    <p>Nous mettons à votre disposition, des formations utiles, accompagnées d'un suivi.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="pricing-content">
+                {% for formation in formations %}
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="pri_table_list">
+                            <span class="base">{{formation.get_bande_display}}</span>
+                            <div class="top-price-inner">
+                            <span class="per-day">{{formation.name}}</span>
+                            </div>
+                            <ol class="pricing-text">
+                                <li class="check">{{formation.category}}</li>
+                                <li class="check">Durée : {{formation.duration}}</li>
+                                <li class="check">{{formation.mode}}</li>
+                            </ol>
+                            <div class="price-btn blue">
+                                <a class="blue" href="#">Consulter</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Invest area -->
+<!-- Start Support-service Area -->
+<div class="support-service-area fix area-padding-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="section-headline text-center">
+                    <h3>Nos services</h3>
+                    <p>ITSS vous accompagne avec ces différents services.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="support-all">
+                <!-- Start About -->
+                {% for service in services %}
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="support-services wow ">
+                            <a class="support-images" href="#"><i class="{{service.icone}}"></i></a>
+                            <div class="support-content">
+                                <h4>{{service.name}}</h4>
+                                <p>{{service.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Support-service Area -->
+<!-- Start Self-area 
+<div class="self-area area-padding">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-md-6 col-sm-6 col-xs-12">
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="self-content">
+                    <h4>An investment multi-national firm is a invest money of one or more experts. Provides more profite, We help your satele to future life and then create the road. Grow Money speedly without any risk. </h4>
+                    <span class="talk-text">Alex ferneld, CEO</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+End Self-area -->
+
+<!-- Start testimonials area-->
+<div class="reviews-area fix">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+            <div class="section-headline text-center">
+                <h3>Ce que nos clients disent de nous</h3>
+            </div>
+        </div>
+        <div class="reviews-top">
+                <div class="col-md-5 col-sm-5 col-xs-12">
+                    <div class="testimonial-inner">
+                        <div class="review-head">
+                            
+                            <p>The phrasal sequence of the Lorem Ipsum text is now so widespread and commonplace that many DTP programmes can generate dummy. The phrasal sequence of the Lorem Ipsum text is now so widespread and commonplace that many DTP programmes can generate dummy</p>
+                            <a class="reviews-btn" href="review.html">More reviews</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 col-sm-7 col-xs-12">
+                    <div class="reviews-content">
+                        <!-- start testimonial carousel -->
+                        <div class="testimonial-carousel item-indicator">
+                            {% for comment in comments %}
+                            <div class="single-testi">
+                                <div class="testi-text">
+                                    <div class="clients-text">
+                                        <div class="client-rating">
+                                            <a href="#"><i class="ti-star"></i></a>
+                                        </div>
+                                        <p>{{comment.text}}</p>
+                                    </div>
+                                    <div class="testi-img ">
+                                        <div class="guest-details">
+                                            <h4>{{comment.user.first_name}}</h4>
+                                            <span class="guest-rev">{{comment.user.groups}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+</div>
+<!-- End testimonials area-->
+<!-- Start partners area-->
+<div class="partners">
+    <div class="container">
+        <div class="section-headline text-center">
+            <h3>Nos partenaires</h3>
+            <p>Ne perdez pas le temps, rejoignez la grande famille.</p>
+        </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="owl-partners owl-carousel">
+            {% for partner in partners %}
+            <div class="partner-item">
+              <img src="{{partner.logo.url}}" title="1" alt="{{partner.name}}">
+            </div>
+          {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- End partners area -->
+{% endblock content %}
