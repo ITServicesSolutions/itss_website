@@ -42,25 +42,19 @@ class Carousel(models.Model):
 
 
 class Comments(models.Model):
-
-    user = models.ForeignKey(
-        User,
-        verbose_name= _("User"),
-        on_delete= models.CASCADE,
-        null = True,
-        blank = True
-    )
-
+    author_full_name = models.CharField(max_length=50,null = True, blank = True)
     text = models.TextField(null = True, blank = True)
+    picture = models.ImageField(upload_to = 'comment/')
     stars = models.IntegerField(null = True, blank = True)
     is_public = models.BooleanField(default=False)
+    author_role = models.CharField(max_length=225,null = True, blank = True)
 
     class Meta:
-        verbose_name = _("Comments")
-        verbose_name_plural = _("Commentss")
+        verbose_name = _("Comment")
+        verbose_name_plural = _("Comments")
 
     def __str__(self):
-        return self.name
+        return str(self.author_full_name)
 
     def get_absolute_url(self):
         return reverse("Comments_detail", kwargs={"pk": self.pk})
@@ -68,8 +62,9 @@ class Comments(models.Model):
 class Partner(models.Model):
 
     name = models.CharField(max_length=255, verbose_name=_('Nom'))
-    logo = models.ImageField(upload_to = 'partner')
-    adresse = models.CharField(max_length=255)
+    logo = models.ImageField(upload_to = 'partner/')
+    link = models.CharField(max_length=255)
+    is_public = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _("Partner")
@@ -80,3 +75,19 @@ class Partner(models.Model):
 
     def get_absolute_url(self):
         return reverse("Partner_detail", kwargs={"pk": self.pk})
+
+
+class Contact(models.Model):
+    
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    subject = models.TextField()
+    message = models.TextField()
+    envoie = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    lu = models.BooleanField(default=False, verbose_name="Non Lue")
+   
+    def __str__(self):
+        return self.name
+    
+    def lu(self):
+        self.statut = True

@@ -12,6 +12,21 @@
                         </ul>
                     </div>
                 </div>
+                {% if request.user.is_authenticated %}  
+                <div class=" col-md-6 col-sm-6">
+                    <div class="topbar-right">
+                        <div class="top-social">
+                            <ul>
+                                <li><a href="https://www.linkedin.com/company/it-services-solutions/"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="https://www.facebook.com/itssBJ/"><i class="fa fa-facebook"></i></a></li>
+                                <a style="color: white; font-size: 20px;" href="{% url 'logout' %}">{{request.user.username}} | Déconnexion</a>         
+                            </ul> 
+                        </div>
+                    </div>
+                </div>
+                
+                {% else %}
                 <div class=" col-md-6 col-sm-6">
                     <div class="topbar-right">
                         <div class="top-social">
@@ -19,12 +34,13 @@
                                 <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                                 <li><a href="#"><i class="fa fa-instagram"></i></a></li>
                                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-youtube"></i></a></li>
-                                <li><a href="#"><i class="fa fa-whatsapp"></i></a></li>
+                                <a style="color: white" href="{% url 'login' %}">Connexion</a> |
+                                <a style="color: white" class="" href="{% url 'page_register' %}">Inscription</a>
                             </ul> 
                         </div>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -57,20 +73,41 @@
                             <!-- logo end -->
                         </div>
                         <div class="col-md-9 col-sm-9">
-                            <div class="header-right-link">
-                                <!-- search option end -->
-                                <a class="s-menu" href="{% url 'login' %}">Connexion</a>
+                            <div class="header-right-link" style="display: flex; margin-left: 30px; margin-bottom: 50px; size: 5px; ">
+                                <!-- search option end Reçue (style="margin-right: 20px")-->
+                            {% if user.is_superuser == True %}
+                                
+                                <a class="s-menu" href="{% url 'demande' %}" title="Consulter les demandes" style=" white-space: nowrap; overflow: hidden;  text-overflow: ellipsis;">Demandes Reçues</a>
+                            {% endif %}
+                            {% if user.is_superuser == False %}
+                                <a class="s-menu" href="{% url 'request_service' %}" title="Demander un service" style=" white-space: nowrap; overflow: hidden;  text-overflow: ellipsis;">Demander un service</a>
+                            {% endif %}
+                                
+
                             </div>
+                          
                             <!-- mainmenu start -->
-                            <nav class="navbar navbar-default">
+                            <nav class="navbar navbar-default" style="margin-top: 12px;">
                                 <div class="collapse navbar-collapse" id="navbar-example">
                                     <div class="main-menu">
                                         <ul class="nav navbar-nav navbar-right">
-                                            <li><a href="{% url 'home' %}">Accueil</a></li>
-                                            <li><a href="{% url 'service' %}">Services</a></li>
-                                            <li><a href="{% url 'formation' %}">Formations</a></li>
-                                            <li><a href="{% url 'about' %}">A propos</a></li>
-                                            <li><a href="{% url 'contact' %}">Contact</a></li>
+
+                                            {% if user.is_superuser == True %}
+                                
+                                                <li><a href="{% url 'home' %}">Accueil</a></li>
+                                                <li><a href="{% url 'service' %}">Services</a></li>
+                                                <li><a href="{% url 'formation' %}">Formations</a></li>
+                                                <li><a href="{% url 'administration' %}">Administration</a></li>
+                                            {% endif %}
+                                            {% if user.is_superuser == False %}
+                                                <li><a href="{% url 'home' %}">Accueil</a></li>
+                                                <li><a href="{% url 'service' %}">Services</a></li>
+                                                <li><a href="{% url 'formation' %}">Formations</a></li>
+                                                <li><a href="{% url 'about' %}">A propos</a></li>
+                                                <li><a href="{% url 'contact' %}">Contact</a></li>
+                                            {% endif %}
+
+                                            
                                         </ul>
                                     </div>
                                 </div>
@@ -88,7 +125,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="mobile-menu">
+                    <div class="mobile-menu" style="margin-top: -15px">
                         <div class="logo">
                             <a href="{% url 'home' %}">
                                 {% for logo in logos %}

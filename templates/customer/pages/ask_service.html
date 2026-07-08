@@ -1,0 +1,89 @@
+{% extends 'customer/main.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="page-area">
+    <div class="breadcumb-overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcrumb text-center">
+                    <div class="section-headline white-headline">
+                        <h3>
+                            Demander un Service
+                        </h3>
+                    </div>
+                    <ul class="breadcrumb-bg">
+                        <li class="home-bread"><a href="{% url 'home' %}" style="color: #f3f0ff;">Accueil </a></li>
+                        <li>Demander</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br>
+
+<div class="container">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <h2>Demande de Service</h2>
+        <div class="container">
+            <form method="POST" action="{% url 'request_service' %}" class="log-form custom-form">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id }}" class="control-label">
+                        {{ field.label_tag }}
+                    </label>
+                    {{ field }}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <button type="submit" id="submit" class="login-btn">Envoyer</button>
+                <div id="msgSubmit" class="h3 hidden"></div> 
+                <div class="clearfix"></div>
+            </div>
+        </form>
+        <style>
+            .container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            form.log-form {
+                margin: auto;
+            }
+            
+            .custom-form {
+                /* Vos styles personnalisés ici */
+                background-color: #f9f9f9;
+                padding: 20px;
+                border-radius: 5px;
+            }
+            
+            .custom-form .form-group label {
+                font-weight: bold;
+                color: #333;
+            }
+            
+            .custom-form .form-group input,
+            .custom-form .form-group textarea {
+                /* Vos styles personnalisés pour les champs de saisie ici */
+                border: 1px solid #ccc;
+                padding: 10px;
+                border-radius: 5px;
+            }
+            
+        </style>
+        </div>
+        
+    </div>
+    
+</div>
+
+{% endblock content %}

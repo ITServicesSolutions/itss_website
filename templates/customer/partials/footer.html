@@ -10,12 +10,15 @@
                                 <a class="footer-black-logo" href="#"><img src="img/logo/logo.png" alt=""></a>
                             </div>
                             <p>
-                                Are you looking for professional advice for your new business. Are you looking for professional advice for your new business. Are you looking for professional advice for your new business.
+                                ITSS, entreprise informatique, met à votre disposition ces services dans les domaines du développement de logiciels, de la consultation informatique ainsi que dans la gestion des ressources humaines.
                             </p>
                             <div class="subs-feilds">
                                 <div class="suscribe-input">
-                                    <input type="email" class="email form-control width-80" id="sus_email" placeholder="Type Email">
-                                    <button type="submit" id="sus_submit" class="add-btn">Subscribe</button>
+                                    <!-- <form method="POST" action="{% url 'contact' %}" class="log-form">
+                                        {% csrf_token %} -->
+                                        <input type="email" class="email form-control width-80" id="sus_email" placeholder="Type Email">
+                                        <button type="submit" id="sus_submit" class="add-btn"><a href="{% url 'contact' %}" style="color: white;">Souscrire</a></button>
+                                    <!-- </form> -->
                                 </div>
                             </div>
                         </div>
@@ -25,22 +28,22 @@
                 <div class="col-md-4 col-sm-3 col-xs-12">
                     <div class="footer-content">
                         <div class="footer-head">
-                            <h4>Services Link</h4>
+                            <h4>Liens rapides</h4>
                             <ul class="footer-list">
-                                <li><a href="#">About us</a></li>
+                                <li><a href="#">A propos</a></li>
                                 <li><a href="#">Services </a></li>
-                                <li><a href="#">Events</a></li>
-                                <li><a href="#">Promotion</a></li>
-                                <li><a href="#">Transition</a></li>
-                                <li><a href="#">Social Media</a></li>
+                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">Formations</a></li>
+                                <li><a href="#">Offres</a></li>
+                                <li><a href="#">Equipes</a></li>
                             </ul>
                             <ul class="footer-list hidden-sm">
-                                <li><a href="#">Customer Care</a></li>
-                                <li><a href="#">Live chat</a></li>
+                                <li><a href="#">Service client</a></li>
+                                <li><a href="#">Discussion</a></li>
                                 <li><a href="#">Notification</a></li>
-                                <li><a href="#">Privacy</a></li>
-                                <li><a href="#">Terms & Condition</a></li>
-                                <li><a href="#">Contact us </a></li>
+                                <li><a href="#">Politique</a></li>
+                                <li><a href="#">Termes & Condition</a></li>
+                                <li><a href="#">Contacts</a></li>
                             </ul>
                         </div>
                     </div>
@@ -51,12 +54,22 @@
                         <div class="footer-head">
                             <h4>Information</h4> 
                             <div class="footer-contacts">
-                                <p><span>Tel :</span> +0890-564-5644</p>
-                                <p><span>Email :</span> info@aievari4.com</p>
-                                <p><span>Location :</span> House- 65/4, London</p>
+                                <p><span>Tel :</span> +229 52 52 52 31</p>
+                                <p><span>Email :</span> contact@it-servicegroup.com</p>
+                                <p><span>Location :</span>Akpakpa - Abokikodji</p>
                             </div> 
                             <div class="footer-icons">
                                 <ul>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-linkedin"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-instagram"></i>
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="#">
                                             <i class="fa fa-facebook"></i>
@@ -64,22 +77,12 @@
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <i class="fa fa-twitter"></i>
+                                            <i class="fa fa-youtube"></i>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <i class="fa fa-google"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-pinterest"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-instagram"></i>
+                                            <i class="fa fa-whatsapp"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -96,8 +99,7 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="copyright">
                         <p>
-                            Copyright © 2020
-                            <a href="#">Aievari</a> All Rights Reserved
+                            Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | ITSS <i class="fa fa-heart" aria-hidden="true"></i> 
                         </p>
                     </div>
                 </div>

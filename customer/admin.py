@@ -4,3 +4,6 @@ from .models import *
 
 admin.site.register(Logo)
 admin.site.register(Carousel)
+admin.site.register(Partner)
+admin.site.register(Comments)
+admin.site.register(Contact)

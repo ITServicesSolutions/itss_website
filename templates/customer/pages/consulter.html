@@ -1,0 +1,168 @@
+{% extends 'customer/main.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="page-area">
+    <div class="breadcumb-overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcrumb text-center">
+                    <div class="section-headline white-headline">
+                        <h3>
+                            Consulter Formation
+                        </h3>
+                    </div>
+                    <ul class="breadcrumb-bg">
+                        <li class="home-bread"><a href="{% url 'home' %}" style="color: #f3f0ff;">Accueil </a></li>
+                        <li>Consulter</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br>
+
+<div class="container">
+    <div class="row">
+        <div class="pricing-content">
+            {% for formation in formations %}
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="pri_table_list">
+                        <span class="base">{{formation.get_bande_display}}</span>
+                        <div class="top-price-inner">
+                        <span class="per-day" title="{{formation.name}}" style=" white-space: nowrap; overflow: hidden;  text-overflow: ellipsis;">
+                            {{formation.name}}</span>
+                        </div>
+                        <ol class="pricing-text">
+                            <li class="check">{{formation.category}}</li>
+                            <li class="check">Durée : {{formation.duration}} Mois</li>
+                            <li class="check">{{formation.mode}}</li>
+                        </ol>
+                        <div class="price-btn blue">
+                            <a class="blue" href="#" onclick="openModal('modal-{{formation.id}}')">Consulter</a>
+                        </div>
+                        <div id="modal-{{formation.id}}" class="modal">
+                            {% if formation.backimage %}
+                                <div class="modal-content" style="background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('{{formation.backimage.url}}');">
+                                    <span class="close" onclick="closeModal('modal-{{formation.id}}')">&times;</span>
+                                    <h2>{{formation.name}}</h2>
+                                    <h4>Durée : {{formation.duration}} Mois <br> {{formation.mode}}</h4><br><br>
+                                    <p>{{formation.description}}</p><br><br>
+                                    {% if formation.fichier %}
+                                        <a href="{{formation.fichier.url}}" download>
+                                            <i class="icon-download"></i> Télécharger la description
+                                        </a>
+                                    {% endif %} <br>
+
+
+                                    {% for video in formation.video_set.all%}
+                                        <!-- Intégrer la vidéo -->
+                                        <video width="320" height="240" controls>
+                                            <source src="{{video.video.url}}" type="video/mp4">
+                                            Votre navigateur ne supporte pas la vidéo.
+                                        </video>
+                                        <!-- Bouton pour télécharger la vidéo -->
+                                        <!--<a href="{{video.video.url}}" download>
+                                            <i class="icon-download"></i> Download
+                                        </a>-->
+                                    {% endfor %}
+
+
+                                    <h5>Certification : {{formation.certification}}</h5><br></div>
+
+                            {% else %}
+                                <div class="modal-content">
+                                    <span class="close" onclick="closeModal('modal-{{formation.id}}')">&times;</span>
+                                    <h2>{{formation.name}}</h2>
+                                    <h4>Durée : {{formation.duration}} Mois <br> {{formation.mode}}</h4><br><br>
+                                    <p>{{formation.description}}</p><br><br>
+                                    {% if formation.fichier %}
+                                        <a href="{{formation.fichier.url}}" download>
+                                            <i class="icon-download"></i> Télécharger la description
+                                        </a>
+                                    {% endif %} <br><br>
+
+
+                                    {% for video in formation.videos %}
+                                        <!-- Intégrer la vidéo -->
+                                        <video width="320" height="240" controls>
+                                            <source src="{{video.url}}" type="video/mp4">
+                                            Votre navigateur ne supporte pas la vidéo.
+                                        </video>
+                                        <!-- Bouton pour télécharger la vidéo -->
+                                        <a href="{{video.url}}" download>
+                                            <i class="icon-download"></i> Télécharger la vidéo
+                                        </a>
+                                    {% endfor %}
+
+
+                                    <h5>Certification : {{formation.certification}}</h5><br></div>
+                            {% endif %}
+
+                            
+                        </div>
+                        
+                        <script>
+                        // Fonction pour ouvrir le modal
+                        function openModal(modalId) {
+                            document.getElementById(modalId).style.display = "block";
+                            document.body.style.overflow = "hidden";
+                        }
+                        
+                        // Fonction pour fermer le modal
+                        function closeModal(modalId) {
+                            document.getElementById(modalId).style.display = "none";
+                            document.body.style.overflow = "auto";
+                        }
+                        </script>
+                        
+                        <style>
+                        /* Style du modal */
+                        .modal {
+                            display: none;
+                            position: fixed;
+                            z-index: 1000;
+                            left: 0;
+                            top: 0;
+                            width: 100%;
+                            height: 100%;
+                            overflow: auto;
+                            background-size: cover;
+                            padding-top: 60px;
+                        }
+                        
+                        /* Style du contenu du modal */
+                        .modal-content {
+                            background-color: #fefefe;
+                            margin: 5% auto;
+                            padding: 20px;
+                            border: 1px solid #888;
+                            width: 80%;
+                        }
+                        
+                        /* Le bouton de fermeture (x) */
+                        .close {
+                            color: #aaa;
+                            float: right;
+                            font-size: 28px;
+                            font-weight: bold;
+                            color: black;
+                        }
+                        
+                        .close:hover,
+                        .close:focus {
+                            text-decoration: none;
+                            cursor: pointer;
+                        }
+                        </style>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

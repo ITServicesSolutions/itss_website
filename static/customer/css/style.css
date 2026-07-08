@@ -631,6 +631,7 @@ div#preloader {
 .slide-area .video-content {
     display: inline-block;
     margin-left: 40px;
+    
 }
 .slide-content .video-play.vid-zone i {
     border-radius: 50%;
@@ -1797,6 +1798,8 @@ span.users {
     position: relative;
     overflow: hidden;
     margin-right: 40px;
+    
+    
 }
 .about-image img {
     border-radius: 5px;
@@ -1808,7 +1811,7 @@ span.users {
     width: 50%;
     height: 100%;
     content: "";
-    background: rgba(6,34,65,0.60) none repeat scroll 0 0;
+    background: rgba(6,34,65,0.60) none repeat scroll 0 0; 
 }
 .about-image .video-content {
     width: 100%;
@@ -1818,10 +1821,10 @@ span.users {
 	left: 0;
 	right: 0;
 	margin: 0 auto;
-	 margin-top: -50px;
+	margin-top: -50px;
 	text-align: center;
 	z-index: 9;
-}
+} 
 .about-image .video-play.vid-zone {
     background: #c42127;
     border-radius: 100%;
@@ -1844,7 +1847,7 @@ span.users {
 }
 .about-image .video-play.vid-zone:hover i{
     color: #c42127;
-}
+} 
 .mission-about {
     border: 1px solid #ccc;
     padding: 20px 35px;

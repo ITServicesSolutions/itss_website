@@ -1,0 +1,89 @@
+{% extends 'customer/main.html' %}
+{% load static %}
+{% block content %}
+
+{% load socialaccount %}
+
+
+<div class="page-area">
+    <div class="breadcumb-overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcrumb text-center">
+                    <div class="section-headline white-headline">
+                        <h3>
+                            Connexion
+                        </h3>
+                    </div>
+                    <ul class="breadcrumb-bg">
+                        <li class="home-bread"><a href="{% url 'home' %}" style="color: #f3f0ff;">Accueil </a></li>
+                        <li>Connexion</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="login-area page-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="login-page">
+                    <div class="login-form">
+                        <h4 class="login-title">Connexion</h4>
+                        <div class="row">
+                            
+                            <form method="POST" action="" class="log-form">
+                                {% csrf_token %}
+                                {% if error_message %}
+                                    <p class="text-warning mt-3 mb-3 text-center fs-3">{{ error_message }}</p>
+                                {% endif %}
+                                
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <input type="text" name="username" id="username" class="form-control" placeholder="Email/Téléphone" required data-error="Veuillez entrer votre adresse email ou numéro de téléphone">
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <input type="password" name="password" id="msg_subject" class="form-control" placeholder="Password" required data-error="Mot de passe incorrect">
+                                </div>
+                                
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="check-group flexbox">
+                                        <label class="check-box">
+                                            <input type="checkbox" class="check-box-input" checked>
+                                            <span class="remember-text">Se rappeler de moi</span>
+                                        </label> 
+
+                                        <a class="text-muted" href="{% url 'request_password' %}">Mot de passe oublié ?</a>
+                                    </div>
+                                </div> 
+                                
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <button type="submit" id="" class="login-btn">Se connecter </button>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="clear"></div>
+                                    <div class="separetor"><span>Ou s'Inscrire</span></div>
+                                    <div class="sign-icon">
+
+                                        <ul>
+                                            {% comment %} <li><a class="{% provider_login_url 'facebook' %}" href="#">Facebook</a></li>
+                                            <li><a class="{% provider_login_url 'google' %}" href="#">Google</a></li> {% endcomment %}
+                                          
+                                        </ul>
+                                        
+                                        <div class="acc-not">Vous n'avez pas un compte ? <a href="{% url 'page_register' %}"> Inscrivez-vous </a></div>
+                                    </div> 
+                                </div> 
+                            </form> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+
+{% endblock content %}

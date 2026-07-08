@@ -2,31 +2,55 @@
 {% load static %}
 {% block content %}
 <div class="container-fluid">
-    <div class="row justify-content-center">
-      <div class="col-12 col-lg-10">
-        <div class="row align-items-center my-4">
-          <div class="col">
-            <h2 class="page-title">Logo</h2>
-          </div>
-          <div class="col-auto">
-            <button type="button" class="btn btn-md btn-danger"><span class="fe fe-plus fe-16 mr-3"></span>Ajouter</button>
-          </div>
-        </div>
-        <div class="card-deck mb-4">
-          {% for logo in logos %}
-          <div class="card border-0 bg-transparent">
-            <img src="{{logo.image.url}}" alt="..." class="card-img-top img-fluid rounded">
-            <div class="card-body">
-              <h5 class="h6 card-title mb-1">{{logo.name}}</h5>
-              <p class="card-text">
-                <span class="badge badge-light text-muted mr-2">1.2M</span>
-                <span class="badge badge-pill badge-light text-muted">SVG</span>
-              </p>
-            </div>
-          </div> <!-- .card -->
-          {% endfor %}
-        </div> <!-- .card-deck -->
+  <div class="row justify-content-center">
+  <div class="col-md-12">
+      <div class="row align-items-center my-3">
+      <div class="col">
+          <h2 class="page-title">Logos</h2>
       </div>
-    </div> <!-- .row -->
-  </div>
+      <div class="col-auto">
+          <a href="{% url 'logo_add' %}" type="button" class="btn btn-lg btn-secondary">
+              <span class="fe fe-plus fe-16 mr-3"></span>Ajouter
+          </a>
+      </div>
+      </div>
+      <div class="file-container border-top">
+      <div class="file-panel mt-4">
+          <table class="table table-bordered table-responsive">
+              <thead>
+              <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Active</th>
+                  <th scope="col">Noir/Blanc</th>
+                  <th scope="col">Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              {% for logo in logos  %}
+              <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                  <td>{{logo.name}}</td>
+                  <td>{{logo.description}}</td>
+                  <td>
+                      {%if logo.image %}
+                      <img src="{{logo.image.url}}" alt="{{carousel.name}}" width="200" height="100">
+                      {%else%} Vide {% endif%}
+                  </td>
+                  <td>{%if logo.is_active == True %} Yes {%else%} No {% endif%}</td>
+                  <td>{%if logo.is_black == True %} Noir {%else%} Blanc {% endif%}</td>
+                  <td><a href="#"><i class="fe fe-pencil">Edit</i></a></td>
+              </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+          
+      </div> <!-- .file-panel -->
+      
+      </div> <!-- .file-container -->
+  </div> <!-- .col -->
+  </div> <!-- .row -->
+</div> <!-- .container-fluid -->
 {% endblock content %}

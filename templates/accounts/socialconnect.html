@@ -1,0 +1,58 @@
+{% extends 'customer/main.html' %}
+{% load static %}
+{% block content %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+
+
+<div class="page-area">
+    <div class="breadcumb-overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcrumb text-center">
+                    <div class="section-headline white-headline">
+                        <h3>
+                            Connexion
+                        </h3>
+                    </div>
+                    <ul class="breadcrumb-bg">
+                        <li class="home-bread"><a href="{% url 'home' %}" style="color: #f3f0ff;">Accueil </a></li>
+                        <li>Connexion</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<form method = 'POST'>
+    {% csrf_token %}
+    {{form|crispy}}
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <button type="submit" id="" class="login-btn">Se connecter </button>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="clear"></div>
+        <div class="separetor"><span>Ou s'Inscrire</span></div>
+        <div class="sign-icon">
+
+            <ul>
+                <li><a class="facebook" href="{% url 'social:begin' 'google-oauth2' %}">Facebook</a></li>
+                
+                <li><a class="google" href="{% url 'social:begin' 'google-oauth2' %}">Google</a></li>
+                
+            </ul>
+            
+            <div class="acc-not">Vous n'avez pas un compte ?  <a href="{% url 'page_register' %}"> Inscrivez-vous</a></div>
+        </div> 
+    </div> 
+</form>
+
+
+
+
+
+{% endblock content %}

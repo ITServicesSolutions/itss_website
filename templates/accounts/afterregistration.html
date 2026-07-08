@@ -1,0 +1,36 @@
+{% extends 'customer/main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="page-area">
+    <div class="breadcumb-overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcrumb text-center">
+                    <div class="section-headline white-headline">
+                        <h3>
+                            Inscription
+                        </h3>
+                    </div>
+                    <ul class="breadcrumb-bg">
+                        <li class="home-bread"><a href="{% url 'home' %}" style="color: #f3f0ff;">Accueil </a></li>
+                        <li>Inscription réussie</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="signup-area page-padding">
+    <div class="container">
+        <div class="row">
+            <div class="card-body">
+                <h1>E-mail de Confirmation </h1>
+                <p>Un email vous a été envoyé! Veuillez cliquez <a href="{% url 'login' %}">ici</a> pour vous connecter.</p>
+              </div>
+        </div>
+     </div>
+</div>
+
+{% endblock content %}

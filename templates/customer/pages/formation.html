@@ -13,7 +13,7 @@
                         </h3>
                     </div>
                     <ul class="breadcrumb-bg">
-                        <li class="home-bread">Accueil</li>
+                        <li class="home-bread"><a href="{% url 'home' %}" style="color: #f3f0ff;">Accueil </a></li>
                         <li>Formation</li>
                     </ul>
                 </div>
@@ -26,130 +26,24 @@
     <div class="container">
         <div class="row">
             <div class="pricing-content">
+                {% for formation in formations %}
                 <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="pri_table_list">
+                        <span class="base">{{formation.get_bande_display}}</span>
                         <div class="top-price-inner">
-                            <span class="per-day">Microsoft office 2019</span>
+                        <span class="per-day">{{formation.name}}</span>
                         </div>
                         <ol class="pricing-text">
-                            <li class="check">Durée : 10h</li>
-                            <li class="check">A distance - Présentiel</li>
-                            <li class="check">Formation certifié</li>
+                            <li class="check">{{formation.category}}</li>
+                            <li class="check">Durée : {{formation.duration}}</li>
+                            <li class="check">{{formation.mode}}</li>
                         </ol>
                         <div class="price-btn blue">
-                            <a class="blue" href="#">Consulter</a>
+                            <a class="blue" href="{% url 'consulter' %}">Consulter</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="pri_table_list">
-                        <div class="top-price-inner">
-                           <span class="per-day">RED HAT LINUX 7</span>
-                        </div>
-                        <ol class="pricing-text">
-                            <li class="check">Durée : 10h</li>
-                            <li class="check">A distance - Présentiel</li>
-                            <li class="check">Formation certifié</li>
-                        </ol>
-                        <div class="price-btn blue">
-                            <a class="blue" href="#">Consulter</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="pri_table_list">
-                        <div class="top-price-inner">
-                           <span class="base">Populaire</span>
-                            <span class="per-day">Oracle 19c intégral</span>
-                        </div>
-                        <ol class="pricing-text">
-                            <li class="check">Durée : 10h</li>
-                            <li class="check">A distance - Présentiel</li>
-                            <li class="check">Formation certifié</li>
-                        </ol>
-                        <div class="price-btn blue">
-                            <a class="blue" href="#">Consulter</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="pri_table_list">
-                        <span class="base">Recommendé</span>
-                        <div class="top-price-inner">
-                           <span class="per-day">Sécurité et Réseaux</span>
-                        </div>
-                        <ol class="pricing-text">
-                            <li class="check">Durée : 10h</li>
-                            <li class="check">A distance - Présentiel</li>
-                            <li class="check">Formation certifié</li>
-                        </ol>
-                        <div class="price-btn blue">
-                            <a class="blue" href="#">Consulter</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="pri_table_list">
-                        <div class="top-price-inner">
-                            <span class="per-day">Microsoft office 2019</span>
-                        </div>
-                        <ol class="pricing-text">
-                            <li class="check">Durée : 10h</li>
-                            <li class="check">A distance - Présentiel</li>
-                            <li class="check">Formation certifié</li>
-                        </ol>
-                        <div class="price-btn blue">
-                            <a class="blue" href="#">Consulter</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="pri_table_list">
-                        <div class="top-price-inner">
-                           <span class="per-day">RED HAT LINUX 7</span>
-                        </div>
-                        <ol class="pricing-text">
-                            <li class="check">Durée : 10h</li>
-                            <li class="check">A distance - Présentiel</li>
-                            <li class="check">Formation certifié</li>
-                        </ol>
-                        <div class="price-btn blue">
-                            <a class="blue" href="#">Consulter</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="pri_table_list">
-                        <div class="top-price-inner">
-                           <span class="base">Populaire</span>
-                            <span class="per-day">Oracle 19c intégral</span>
-                        </div>
-                        <ol class="pricing-text">
-                            <li class="check">Durée : 10h</li>
-                            <li class="check">A distance - Présentiel</li>
-                            <li class="check">Formation certifié</li>
-                        </ol>
-                        <div class="price-btn blue">
-                            <a class="blue" href="#">Consulter</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="pri_table_list">
-                        <span class="base">Recommendé</span>
-                        <div class="top-price-inner">
-                           <span class="per-day">Sécurité et Réseaux</span>
-                        </div>
-                        <ol class="pricing-text">
-                            <li class="check">Durée : 10h</li>
-                            <li class="check">A distance - Présentiel</li>
-                            <li class="check">Formation certifié</li>
-                        </ol>
-                        <div class="price-btn blue">
-                            <a class="blue" href="#">Consulter</a>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

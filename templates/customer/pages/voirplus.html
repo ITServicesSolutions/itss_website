@@ -1,0 +1,40 @@
+{% extends 'customer/main.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="page-area">
+    <div class="breadcumb-overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcrumb text-center">
+                    <div class="section-headline white-headline">
+                        <h3>
+                            En savoir Plus
+                        </h3>
+                    </div>
+                    <ul class="breadcrumb-bg">
+                        <li class="home-bread"><a href="{% url 'home' %}" style="color: #f3f0ff;">Accueil </a></li>
+                        <li>Voir Plus</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br>
+
+<div class="container">
+	<marquee direction="right"><p style="height: 5px;">Désole cette page est en maintenance... Veuillez réesayer plus tard. Merci.</p></marquee>
+</div>
+
+<style> 
+      marquee {
+        width: 100%;
+        padding: 10px 0;
+        background-color: lightblue;
+      }
+</style>
+
+{% endblock content %}

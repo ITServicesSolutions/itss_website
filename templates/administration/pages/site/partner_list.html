@@ -1,0 +1,52 @@
+{% extends 'administration/main.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row justify-content-center">
+  <div class="col-md-12">
+      <div class="row align-items-center my-3">
+      <div class="col">
+          <h2 class="page-title">Partners</h2>
+      </div>
+      <div class="col-auto">
+          <a href="{% url 'partner_add' %}" type="button" class="btn btn-lg btn-secondary">
+              <span class="fe fe-plus fe-16 mr-3"></span>Ajouter
+          </a>
+      </div>
+      </div>
+      <div class="file-container border-top">
+      <div class="file-panel mt-4">
+          <table class="table table-bordered table-responsive">
+              <thead>
+              <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Logo</th>
+                  <th scope="col">Lien</th>
+                  <th scope="col">Active</th>
+              </tr>
+              </thead>
+              <tbody>
+              {% for partner in partners  %}
+              <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                  <td>{{partner.name}}</td>
+                  <td>
+                      {%if partner.logo %}
+                      <img src="{{partner.logo.url}}" alt="{{partner.name}}" width="200" height="100">
+                      {%else%} Vide {% endif%}
+                  </td>
+                  <td>{%if partner.is_public == True %} Yes {%else%} No {% endif%}</td>
+                  <td><a href="#"><i class="fe fe-pencil">Edit</i></a></td>
+              </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+          
+      </div> <!-- .file-panel -->
+      
+      </div> <!-- .file-container -->
+  </div> <!-- .col -->
+  </div> <!-- .row -->
+</div> <!-- .container-fluid -->
+{% endblock content %}

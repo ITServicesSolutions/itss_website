@@ -44,8 +44,8 @@
                         <a href="{% url 'carousel_list' %}">
                         <strong>Carousel</strong>
                         </a>
-                        <br />
-                        <span class="badge badge-light text-muted">nbre files</span>
+                        <br/>
+                        <span class="badge badge-light text-muted">{{carousel}} carousel(s)</span>
                     </div>
                     </div>
                 </div> <!-- .card-body -->
@@ -60,11 +60,11 @@
                         <span class="fe fe-folder fe-16 text-white"></span>
                     </div>
                     <div class="flex-fill ml-4 fname">
-                        <a href="#detail">
-                        <strong>Service</strong>
-                        </a>
-                        <br />
-                        <span class="badge badge-light text-muted">nbre files</span>
+                        <a href="{% url 'service_liste'%}">
+                            <strong>Service</strong>
+                            </a>
+                            <br />
+                            <span class="badge badge-light text-muted">{{service}} service (s)</span>
                     </div>
                     </div>
                 </div> <!-- .card-body -->
@@ -79,11 +79,11 @@
                         <span class="fe fe-folder fe-16 text-white"></span>
                     </div>
                     <div class="flex-fill ml-4 fname">
-                        <a href="#detail">
+                        <a href="{% url 'comments_list' %}">
                         <strong>Commentaire</strong>
                         </a>
                         <br />
-                        <span class="badge badge-light text-muted">nbre files</span>
+                        <span class="badge badge-light text-muted">{{comment}} comment(s)</span>
                     </div>
                     </div>
                 </div> <!-- .card-body -->
@@ -102,7 +102,7 @@
                         <strong>Partenaire</strong>
                         </a>
                         <br />
-                        <span class="badge badge-light text-muted">nbre files</span>
+                        <span class="badge badge-light text-muted">{{partner}} partners</span>
                     </div>
                     </div>
                 </div> <!-- .card-body -->

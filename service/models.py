@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
+from django.conf import settings
 
-# Create your models here.
 
 class TypeService(models.Model):
 
@@ -47,6 +47,14 @@ class Service(models.Model):
     def get_absolute_url(self):
         return reverse("Service_detail", kwargs={"pk": self.pk})
 
+
+class ServiceRequest(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    details = models.TextField()
+    
+
+
 class CategoryFormation(models.Model):
 
     name = models.CharField(_('Name'), max_length=100)
@@ -81,7 +89,8 @@ class Formation(models.Model):
     description = models.TextField(_('Description'), null = True, blank=True)
     mode = models.CharField(_('Mode'), null = True, blank=True, max_length= 255)
     duration = models.IntegerField(_('Duration'))
-    fichier = models.FileField(_('Fichier'), upload_to="formation", null = True, blank=True)
+    backimage = models.FileField(_('Backimage'), upload_to="formation/images/", null = True, blank=True)
+    fichier = models.FileField(_('Fichier'), upload_to="formation/details/", null = True, blank=True)
     certification = models.CharField(_('Certification'), null = True, blank=True, max_length= 255)
     is_public = models.BooleanField(_('IsPublic'), default=True)
     is_principal = models.BooleanField(_('IsPrincipal'), default=False)
@@ -95,3 +104,8 @@ class Formation(models.Model):
 
     def get_absolute_url(self):
         return reverse("Formation_detail", kwargs={"pk": self.pk})
+
+
+class Video(models.Model):
+    formation = models.ForeignKey(Formation, on_delete=models.CASCADE)
+    video = models.FileField(upload_to="formation/tutoriels/", null=True, blank=True)

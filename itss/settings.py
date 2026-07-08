@@ -9,11 +9,16 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import os
+import os, logging
 from pathlib import Path
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +30,7 @@ SECRET_KEY = 'django-insecure-vjk-2dfe_@9udgq0t5r*ptw_h!q1xnju5s1w(qlx@nnj%&s3_$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['it-servicegroup.com', 'www.it-servicegroup.com']
 
 
 # Application definition
@@ -44,8 +49,43 @@ INSTALLED_APPS = [
     'service',
     'entreprise',
 
-    'phonenumber_field',
+    'phonenumber_field', 
+    'rest_framework',
+    'rest_framework_simplejwt',
+    
+    'corsheaders',
+    
+   
+    'allauth', 
+    'allauth.account',
+    'allauth.socialaccount', 
+    'allauth.socialaccount.providers.google', 
+    'allauth.socialaccount.providers.facebook', 
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+SITE_ID = 1
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+ACCOUNT_SESSION_REMEMBER = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,6 +95,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    'allauth.account.middleware.AccountMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'itss.urls'
@@ -82,8 +125,35 @@ AUTH_USER_MODEL = 'accounts.User'
 swappable = 'AUTH_USER_MODEL'
 
 AUTHENTICATION_BACKENDS = [
+    
     'accounts.auth.UserBackend',
-    ]
+    
+    #'users.backends.EmailBackend',
+    
+    #'allauth.account.auth_backends.AuthenticationBackend'
+    
+    'django.contrib.auth.backends.ModelBackend',
+    
+]
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+}
+
+
+REST_USE_JWT = True
 
 PHONENUMBER_DB_FORMAT = "INTERNATIONAL"
 
@@ -97,12 +167,15 @@ PHONENUMBER_DEFAULT_FORMAT = "INTERNATIONAL"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'itss-db',
-        'USER': 'postgres',
-        'PASSWORD': 'aymart',
+        'ENGINE': 'django.db.backends.mysql',
+        'CHARSET': 'utf8mb4',
+        'COLLATION': 'utf8mb4_0900_ai_ci',
+        'NAME': 'c1955546c_test_itss',
+        'USER': 'c1955546c_aymart',
+        'PASSWORD': 'Coffi_0427',
         'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'PORT': '3306',
+        #'PORT': '5432',
     }
 }
 
@@ -141,6 +214,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 STATIC_URL = '/static/'
 
@@ -154,3 +228,22 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "gnancadjagillesdereck@gmail.com"
+EMAIL_HOST_PASSWORD ="rnjxtgjlmddijxkg"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_USE_SSL = False
+PASSWORD_RESET_TIMEOUT = 14400
+
+# Configurer allauth pour la gestion des e-mails
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+

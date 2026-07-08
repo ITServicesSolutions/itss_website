@@ -13,7 +13,7 @@
                         </h3>
                     </div>
                     <ul class="breadcrumb-bg">
-                        <li class="home-bread">Accueil</li>
+                        <li class="home-bread"><a href="{% url 'home' %}" style="color: #f3f0ff;">Accueil </a></li>
                         <li>Service</li>
                     </ul>
                 </div>
@@ -28,65 +28,18 @@
         <div class="row">
             <div class="support-all">
                 <!-- Start About -->
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="support-services wow ">
-                        <a class="support-images" href="#"><i class="flaticon-023-management"></i></a>
-                        <div class="support-content">
-                            <h4>Expert management</h4>
-                            <p>Replacing a  maintains the amount of lines. When replacing a selection. help agencies to define their new business objectives and then create</p>
+               
+                {% for service in services %}
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="support-services wow ">
+                            <a class="support-images" href="#"><i class="{{service.icone}}"></i></a>
+                            <div class="support-content">
+                                <h4>{{service.name}}</h4>
+                                <p>{{service.description}}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Start About -->
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="support-services ">
-                        <a class="support-images" href="#"><i class="flaticon-036-security"></i></a>
-                        <div class="support-content">
-                            <h4>Secure investment</h4>
-                            <p>Replacing a  maintains the amount of lines. When replacing a selection. help agencies to define their new business objectives and then create</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Start services -->
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="support-services ">
-                        <a class="support-images" href="#"><i class="flaticon-003-approve"></i></a>
-                        <div class="support-content">
-                            <h4>Registered company</h4>
-                            <p>Replacing a  maintains the amount of lines. When replacing a selection. help agencies to define their new business objectives and then create</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Start services -->
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="support-services">
-                        <a class="support-images" href="#"><i class="flaticon-042-wallet"></i></a>
-                        <div class="support-content">
-                            <h4>Instant withdrawal</h4>
-                            <p>Replacing a  maintains the amount of lines. When replacing a selection. help agencies to define their new business objectives and then create</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Start services -->
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="support-services ">
-                        <a class="support-images" href="#"><i class="flaticon-032-report"></i></a>
-                        <div class="support-content">
-                            <h4>Verified security</h4>
-                            <p>Replacing a  maintains the amount of lines. When replacing a selection. help agencies to define their new business objectives and then create</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Start services -->
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="support-services">
-                        <a class="support-images" href="#"><i class="flaticon-024-megaphone"></i></a>
-                        <div class="support-content">
-                            <h4>Live customer support</h4>
-                            <p>Replacing a  maintains the amount of lines. When replacing a selection. help agencies to define their new business objectives and then create</p>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

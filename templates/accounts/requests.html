@@ -1,0 +1,171 @@
+{% extends 'customer/main.html' %}
+{% load static %}
+{% block content %}
+
+
+<style>
+    .btn { 
+        background-color: red;
+        
+    }
+</style>
+
+<div class="page-area">
+    <div class="breadcumb-overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="breadcrumb text-center">
+                    <div class="section-headline white-headline">
+                        <h3>
+                            Requests
+                        </h3>
+                    </div>
+                    <ul class="breadcrumb-bg">
+                        <li class="home-bread"><a href="{% url 'home' %}" style="color: #f3f0ff;">Accueil </a></li>
+                        <li>Received </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br>
+<div class="breadcrumb-bg">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title" style="color: white">Demandes Reçues</h2>
+            <br><br>
+            <table class="table" style="color: white">
+            <tr>
+                <th style="color: rgb(226, 23, 23)">Utilisateur</th>
+                <th style="color: rgb(226, 23, 23)">Service demandé</th>
+                <th style="color: rgb(226, 23, 23)">Détails</th>
+            </tr>
+            {% for request in service_requests %} 
+                <tr>
+                    <td>{{ request.user.username }}</td>
+                    <td>{{ request.service.name }}</td>
+                    <td>{{ request.details }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">Aucune demande de service trouvée.</td>
+                </tr>
+            {% endfor %}
+            </table>
+            <hr>
+            
+        </div>
+    </div>    
+</div>
+
+<br>
+<div class="breadcrumb-bg">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title" style="color: white">Messages Reçues</h2>
+            <br><br>
+            <table class="table" style="color: white">
+                <tr>
+                    <th style="color: rgb(226, 23, 23)">Identifiant</th>
+                    <th style="color: rgb(226, 23, 23)">Date</th>
+                    <th style="color: rgb(226, 23, 23)">Email</th>
+                    <th style="color: rgb(226, 23, 23)">Sujet</th>
+                    <th style="color: rgb(226, 23, 23)">Message</th>
+                    <th style="color: rgb(226, 23, 23)">Statut</th>
+                    
+                </tr>
+                {% for result in data %}
+                <tr>
+                    <td>{{result.id}}</td>
+                    <td>{{result.envoie}}</td>
+                    <td>{{result.email}}</td>
+                    <td>{{result.subject}}</td>
+                    <td>{{result.message}}</td>
+                    <td>
+                        <input type="button" value="Non Lu" id="btn{{ forloop.counter }}" class="btn" data-state="{{ result.state }}" onclick="changeButtonState(this)">
+
+                        {% if value == Lu %}
+                            
+                            <i class="fa-sharp fa-solid fa-check-double"></i>
+
+                        {% endif %}
+                    </td> 
+                    <!-- <td><input type="button" value="Non Lu" id="btn{{ loop.index }}" class="btn" data-index="{{ loop.index }}"></td>  -->
+                    <!-- <td><input type="button" value="Non Lu" id="btn{{ loop.index }}" class="btn" onclick="changeButtonState({{ loop.index }})"></td> -->
+                </tr>
+
+                
+                {% endfor %}
+                
+            </table>
+            <hr>
+            
+        </div>
+    </div>    
+</div> 
+<br><br><br>
+<br><br>
+
+<script>
+
+    // function checkButtonStates() {
+//     var buttons = document.getElementsByClassName('btn');
+
+//     for (var i = 0; i < buttons.length; i++) {
+//         var button = buttons[i];
+//         var index = button.dataset.index;
+//         var state = localStorage.getItem('buttonState' + index);
+
+//         if (state === 'lu') {
+//             button.style.backgroundColor = 'green';
+//             button.value = 'Lu';
+//         }
+//     }
+// }
+
+// function changeButtonState(index) {
+//     var button = document.getElementById('btn' + index);
+
+//     button.style.backgroundColor = 'green';
+
+//     button.value = 'Lu';
+
+//     localStorage.setItem('buttonState' + index, 'lu');
+// }
+
+// // Appeler la fonction de vérification lors du chargement de la page
+// checkButtonStates();
+
+    function checkButtonStates() {
+    var buttons = document.getElementsByClassName('btn');
+
+    for (var i = 0; i < buttons.length; i++) {
+        var button = buttons[i];
+        var state = button.dataset.state;
+
+        if (state === 'lu') {
+        button.style.backgroundColor = 'green';
+        button.value = 'Lu';
+        }
+    }
+    }
+
+    function changeButtonState(button) {
+    button.style.backgroundColor = 'green';
+    button.value = 'Lu';
+    button.dataset.state = 'lu';
+    }
+
+    // Appeler la fonction de vérification lors du chargement de la page
+    checkButtonStates();
+
+</script>
+
+
+
+{% endblock content %}
+

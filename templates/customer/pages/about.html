@@ -13,8 +13,8 @@
                         </h3>
                     </div>
                     <ul class="breadcrumb-bg">
-                        <li class="home-bread">{% block page_racine %}Accueil{% endblock page_racine %}</li>
-                        <li>A PROPOS</li>
+                        <li class="home-bread"><a href="{% url 'home' %}" style="color: #f3f0ff;">Accueil </a></li>
+                        <li>A propos</li>
                     </ul>
                 </div>
             </div>
@@ -25,27 +25,31 @@
 <div class="about-area page-padding">
     <div class="container">
         <div class="row">
+            <h3 style="font-family: Motiva Sans; font-style: italic;">Créé en 2016, ITSS est un écosystème d’innovation et une communauté pour les personnes qui souhaitent co-créer et collaborer sur des projets.</h3>
             <div class="col-md-6 col-sm-12 col-xs-12">
+                <br>
                 <div class="about-image">
-                    <img src="{% static 'customer/img/about/ab.jpg' %}" alt="">
-                    <div class="video-content">
-                        <a href="https://www.youtube.com/watch?v=O33uuBh6nXA" class="video-play vid-zone">
-                            <i class="fa fa-play"></i>
-                        </a>
+          
+                    <img src="{% static 'customer/img/about/ab.jpg' %}" alt="" style="opacity: 0.2; backface-visibility: hidden;">
+                    <div class="video-content" >
+                       
+                        <video autoplay="" width="500" height="auto" loop="" muted="" class="custom-video" poster="" >
+                            <source src="{% static 'video/v1.mp4' %}" type="video/mp4" class="video-play vid-zone">
+                        </video>
                     </div>
                 </div>
             </div>
             <!-- column end -->
             <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="about-content">
-                    <h3>A Investment firm is a business of one or more experts that provides professional investment service</h3>
-                    <p>The phrasal sequence of the Lorem Ipsum text is now so widespread and commonplace that many DTP programmes can generate dummy text using the starting sequence "Lorem ipsum". Fortunately, the phrase 'Lorem Ipsum' is now recognized by electronic pre-press systems and, when found, an alarm can be raised.</p>
+                   
+                    <p>Visant à résoudre des problèmes critiques au niveau national et international. Notre mission est de promouvoir une culture de l'entrepreneuriat ancrée dans l'innovation, la créativité et le partage. A IT Services & Solutions, nous offrons plusieurs solutions : le développement web, les solutions web, les infrastructures réseaux et sécurité, l’ingénierie des produits et services , le Big Data et Business intelligent Analytique, le Conseil et Audit Informatique ainsi que des formations.Notre communauté comprend des entrepreneurs, des concepteurs, des développeurs, des spécialistes du marketing, et nous avons actuellement 1 site à Cotonou (Bénin) : Lot 132 Sodjeatinmin, Maison GBAGUIDI.  Notre processus métier est composer de :</p>
                     <div class="about-details">
                         <ul class="marker-list">
-                            <li>The phrasal sequence of the Lorem Ipsum text.</li>
-                            <li>ducimus adipisci voluptas consectetur adipisicing.</li>
-                            <li>consectetur adipisicing elit praesentium maxime.</li>
-                            <li>programmes can generate dummy text using..</li>
+                            <li>Service financier et comptable, Administration RH et support global de paie.</li>
+                            <li>Traduction de documents, Gestion des contrats .</li>
+                            <li>Renouvèlement de contrats et la gestion des commandes.</li>
+                            <li>Secrétariat et support de conformité .</li>
                         </ul>
                     </div>
                 </div>
@@ -68,8 +72,8 @@
                             <i class="flaticon-004-bar-chart"></i>
                         </div>
                         <div class="mission-text">
-                            <h4>Our Mission</h4>
-                            <p>The phrasal sequence of the Lorem Ipsum text is now so widespread and commonplace that many DTP programme</p>
+                            <h4>Notre Objectif</h4>
+                            <p style="text-align: justify">IT Services & Solutions propose aux entreprises, particuliers, organisations non gouvernementales et gouvernements des solutions sur-mesure et adaptées à leurs structures afin de les aider à atteindre leurs objectifs.</p>
                         </div>
                     </div>
                 </div>
@@ -80,8 +84,8 @@
                             <i class="flaticon-031-release"></i>
                         </div>
                         <div class="mission-text">
-                            <h4>Our Vision</h4>
-                            <p>The phrasal sequence of the Lorem Ipsum text is now so widespread and commonplace that many DTP programme</p>
+                            <h4>Notre Plan</h4>
+                            <p style="text-align: justify">A travers ses différents programmes de formation, IT Services & Solutions participe à la création de valeur ajoutée dans l’écosystème entrepreneurial tech et se donne pour mission de créer une génération de « success stories » dans le numérique.</p>
                         </div>
                     </div>
                 </div>
@@ -92,8 +96,8 @@
                             <i class="flaticon-023-management"></i>
                         </div>
                         <div class="mission-text">
-                            <h4>Our Experience</h4>
-                            <p>The phrasal sequence of the Lorem Ipsum text is now so widespread and commonplace that many DTP programme</p>
+                            <h4>Notre Vision</h4>
+                            <p style="text-align: justify">Les programmes de formations de de processus métiers de IT Services & Solutions apportent un soutien technique, un mentorat de haute qualité, pour accompagner les entrepreneurs numériques et toute personne assoiffée de la connaissance.</p>
                         </div>
                     </div>
                 </div>
