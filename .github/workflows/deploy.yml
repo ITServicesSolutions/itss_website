@@ -33,23 +33,6 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.skip_tests != 'yes' }}
 
-    services:
-      # Base de données MySQL pour les tests
-      # (isolée du serveur de prod — aucun risque sur les données en ligne)
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: test_root_password
-          MYSQL_DATABASE: test_itss
-          MYSQL_USER: test_user
-          MYSQL_PASSWORD: test_password
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd "mysqladmin ping -h 127.0.0.1"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
     steps:
       - name: "📥 Récupération du code"
@@ -72,16 +55,16 @@ jobs:
       - name: "🧪 Lancement des tests Django"
         env:
           # Variables d'environnement pour les tests
-          # Utilise la BDD MySQL de test ci-dessus, PAS celle de prod
+          # Utilise la vraie base de données via les secrets GitHub
           DJANGO_DEBUG: "True"
-          DJANGO_SECRET_KEY: "cle-secrete-temporaire-pour-les-tests-uniquement"
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
           ALLOWED_HOSTS: "localhost,127.0.0.1"
           DB_ENGINE: "django.db.backends.mysql"
-          DB_HOST: "127.0.0.1"
-          DB_PORT: "3306"
-          DB_NAME: "test_itss"
-          DB_USER: "test_user"
-          DB_PASSWORD: "test_password"
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_CHARSET: "utf8mb4"
           DB_COLLATION: "utf8mb4_0900_ai_ci"
         run: python manage.py test --verbosity=2
