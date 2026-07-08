@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os, logging
 from pathlib import Path
-from decouple import config
+from dotenv import load_dotenv
+
+# Charger les variables d'environnement depuis le fichier .env
+load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,12 +28,12 @@ logger = logging.getLogger(__name__)
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vjk-2dfe_@9udgq0t5r*ptw_h!q1xnju5s1w(qlx@nnj%&s3_$'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'fallback-insecure-key-change-me')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = ['it-servicegroup.com', 'www.it-servicegroup.com']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 
 # Application definition
@@ -167,15 +170,14 @@ PHONENUMBER_DEFAULT_FORMAT = "INTERNATIONAL"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'CHARSET': 'utf8mb4',
-        'COLLATION': 'utf8mb4_0900_ai_ci',
-        'NAME': 'c1955546c_test_itss',
-        'USER': 'c1955546c_aymart',
-        'PASSWORD': 'Coffi_0427',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        #'PORT': '5432',
+        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.mysql'),
+        'CHARSET': os.getenv('DB_CHARSET', 'utf8mb4'),
+        'COLLATION': os.getenv('DB_COLLATION', 'utf8mb4_0900_ai_ci'),
+        'NAME': os.getenv('DB_NAME', ''),
+        'USER': os.getenv('DB_USER', ''),
+        'PASSWORD': os.getenv('DB_PASSWORD', ''),
+        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+        'PORT': os.getenv('DB_PORT', '3306'),
     }
 }
 
@@ -231,8 +233,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = "gnancadjagillesdereck@gmail.com"
-EMAIL_HOST_PASSWORD ="rnjxtgjlmddijxkg"
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

@@ -1,0 +1,279 @@
+# ================================================================
+# FICHIER : .github/workflows/deploy.yml
+# PROJET  : itss_website (Django sur cPanel)
+# RÔLE    : Déploie automatiquement sur cPanel à chaque push
+#           sur la branche "feature-solv", avec backup, migrations
+#           et envoi FTP des fichiers nécessaires uniquement.
+# ================================================================
+
+name: "🚀 Déploiement Django → cPanel"
+
+on:
+  push:
+    branches:
+      - feature-solv            # ← Déclenché uniquement sur push vers feature-solv
+
+  workflow_dispatch:            # ← Permet aussi un déclenchement manuel
+    inputs:
+      skip_tests:
+        description: "Passer les tests ? (yes/no)"
+        required: false
+        default: "no"
+
+# ================================================================
+# JOBS
+# ================================================================
+jobs:
+
+  # ──────────────────────────────────────────────────────────────
+  # JOB 1 — TESTS
+  # ──────────────────────────────────────────────────────────────
+  tests:
+    name: "✅ Tests Django"
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.skip_tests != 'yes' }}
+
+    services:
+      # Base de données MySQL pour les tests
+      # (isolée du serveur de prod — aucun risque sur les données en ligne)
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: test_root_password
+          MYSQL_DATABASE: test_itss
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: test_password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "mysqladmin ping -h 127.0.0.1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: "📥 Récupération du code"
+        uses: actions/checkout@v4
+
+      - name: "🐍 Installation Python 3.9"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+          cache: "pip"
+
+      - name: "📦 Installation des dépendances système (MySQL)"
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y default-libmysqlclient-dev build-essential pkg-config
+
+      - name: "📦 Installation des dépendances Python"
+        run: pip install -r requirements.txt
+
+      - name: "🧪 Lancement des tests Django"
+        env:
+          # Variables d'environnement pour les tests
+          # Utilise la BDD MySQL de test ci-dessus, PAS celle de prod
+          DJANGO_DEBUG: "True"
+          DJANGO_SECRET_KEY: "cle-secrete-temporaire-pour-les-tests-uniquement"
+          ALLOWED_HOSTS: "localhost,127.0.0.1"
+          DB_ENGINE: "django.db.backends.mysql"
+          DB_HOST: "127.0.0.1"
+          DB_PORT: "3306"
+          DB_NAME: "test_itss"
+          DB_USER: "test_user"
+          DB_PASSWORD: "test_password"
+          DB_CHARSET: "utf8mb4"
+          DB_COLLATION: "utf8mb4_0900_ai_ci"
+        run: python manage.py test --verbosity=2
+
+  # ──────────────────────────────────────────────────────────────
+  # JOB 2 — BACKUP SSH + MIGRATIONS + COLLECTSTATIC
+  # ──────────────────────────────────────────────────────────────
+  backup-and-migrate:
+    name: "🔒 Backup & Migrations SSH"
+    runs-on: ubuntu-latest
+    needs: tests
+    # Si les tests sont skippés, ce job se lance quand même
+    if: always() && (needs.tests.result == 'success' || needs.tests.result == 'skipped')
+
+    steps:
+      - name: "🔒 Backup backup_N + Migrations + collectstatic"
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
+          command_timeout: 10m
+          script: |
+            set -e
+            echo "══════════════════════════════════════════"
+            echo "  ÉTAPE 1 : Backup automatique backup_N  "
+            echo "══════════════════════════════════════════"
+
+            PROJECT_DIR="/home/c1955546c/public_html/it-servicegroup.com/itss"
+            BACKUP_BASE="/home/c1955546c/public_html/it-servicegroup.com"
+
+            # Déterminer le prochain numéro de backup
+            LAST_N=$(ls -d ${BACKUP_BASE}/backup_* 2>/dev/null | grep -oP 'backup_\K[0-9]+' | sort -n | tail -1)
+            if [ -z "$LAST_N" ]; then
+              NEXT_N=1
+            else
+              NEXT_N=$((LAST_N + 1))
+            fi
+
+            BACKUP_DIR="${BACKUP_BASE}/backup_${NEXT_N}"
+            echo "Création du backup : ${BACKUP_DIR}"
+            cp -r "${PROJECT_DIR}" "${BACKUP_DIR}"
+            echo "✅ Backup backup_${NEXT_N} créé avec succès !"
+
+            echo ""
+            echo "══════════════════════════════════════════"
+            echo "  ÉTAPE 2 : Activation virtualenv         "
+            echo "══════════════════════════════════════════"
+
+            source /home/c1955546c/virtualenv/public_html/it-servicegroup.com/itss/3.9/bin/activate
+            cd /home/c1955546c/public_html/it-servicegroup.com/itss
+
+            echo "Python : $(python --version)"
+            echo "Virtualenv actif : $VIRTUAL_ENV"
+
+            echo ""
+            echo "══════════════════════════════════════════"
+            echo "  ÉTAPE 3 : Migrations Django              "
+            echo "══════════════════════════════════════════"
+
+            python manage.py migrate --noinput
+            echo "✅ Migrations appliquées avec succès !"
+
+            echo ""
+            echo "══════════════════════════════════════════"
+            echo "  ÉTAPE 4 : Collecte des fichiers statiques"
+            echo "══════════════════════════════════════════"
+
+            python manage.py collectstatic --noinput
+            echo "✅ Fichiers statiques collectés !"
+
+            echo ""
+            echo "══════════════════════════════════════════"
+            echo "  ÉTAPE 5 : Redémarrage Passenger          "
+            echo "══════════════════════════════════════════"
+
+            mkdir -p ${PROJECT_DIR}/tmp
+            touch ${PROJECT_DIR}/tmp/restart.txt
+            echo "✅ Passenger redémarré (tmp/restart.txt touché) !"
+
+  # ──────────────────────────────────────────────────────────────
+  # JOB 3 — DÉPLOIEMENT FTP (fichiers source Django)
+  # ──────────────────────────────────────────────────────────────
+  deploy-files:
+    name: "📤 Envoi des fichiers via FTP"
+    runs-on: ubuntu-latest
+    needs: backup-and-migrate
+    if: always() && needs.backup-and-migrate.result == 'success'
+
+    steps:
+      - name: "📥 Récupération du code"
+        uses: actions/checkout@v4
+
+      # ── Déploiement FTP ──────────────────────────────────────
+      # N'envoie QUE les fichiers nécessaires au fonctionnement
+      # de Django en production. La liste d'exclusion ci-dessous
+      # protège la BDD de prod et les fichiers sensibles.
+      - name: "📤 Déploiement FTP vers cPanel"
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: ${{ secrets.FTP_PORT }}
+          security: loose
+          log-level: verbose
+
+          # ⚠️ Première fois après un échec mid-upload : repart de zéro.
+          # → Mettre à false après un déploiement réussi.
+          dangerous-clean-slate: false
+
+          # ── Dossier local à envoyer ──────────────────────────
+          local-dir: ./                   # Racine du projet local
+
+          # ── Dossier cible sur cPanel ─────────────────────────
+          # Utilise le secret FTP_TARGET pour le chemin distant
+          server-dir: ${{ secrets.FTP_TARGET }}
+
+          # ── Fichiers et dossiers EXCLUS de l'envoi ───────────
+          # Tout ce qui est listé ici ne sera JAMAIS envoyé sur le serveur.
+          exclude: |
+            **/.git*
+            **/.git*/**
+
+            # Environnement virtuel local (recréé sur le serveur)
+            **/env/**
+            **/venv/**
+            **/.venv/**
+            **/.pyenv/**
+
+            # Cache Python (inutile et volumineux)
+            **/__pycache__/**
+            **/*.py[cod]
+            **/*$py.class
+            **/*.pyc
+            **/*.pyo
+
+            # Base de données locale SQLite & autres BD (CRITIQUE)
+            **/db.sqlite3
+            **/*.sqlite3
+            **/*.db
+
+            # Fichier .env (les secrets prod sont déjà sur le serveur)
+            **/.env
+
+            # Fichiers logs et temporaires
+            **/*.log
+            **/*.pot
+            **/*.swp
+            **/*.swo
+            **/*.tmp
+
+            # Fichiers inutiles en prod
+            **/*.zip
+            **/*.tar.gz
+            **/Readme.md
+            **/README.md
+            **/README-CICD.md
+            **/*.sql
+
+            # Dossiers Django générés ou propres au serveur
+            **/staticfiles/**
+            **/media/**
+
+            # Dossier Node / Frontend
+            **/node_modules/**
+            **/npm-debug.log
+            **/yarn-error.log
+            **/build/**
+            **/dist/**
+
+            # IDEs & éditeurs
+            **/.vscode/**
+            **/.idea/**
+            **/*.code-workspace
+            **/.DS_Store
+            **/Thumbs.db
+
+            # Backups (ne jamais renvoyer les backups)
+            **/backup*/**
+            **/backup*.zip
+
+      # ── Réactivation de l'application ───────────────────────
+      - name: "🌐 Réactivation et Réveil de l'application (HTTP)"
+        run: |
+          echo "Attente de 5 secondes avant le réveil..."
+          sleep 5
+          echo "Réveil de l'application via HTTP..."
+          curl -s -I -k https://it-servicegroup.com/ || true
+          curl -s -I -k http://it-servicegroup.com/ || true
+          curl -s -I -k https://www.it-servicegroup.com/ || true
+          curl -s -I -k http://www.it-servicegroup.com/ || true
+          echo "✅ Requêtes de réveil envoyées !"

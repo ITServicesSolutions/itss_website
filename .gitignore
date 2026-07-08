@@ -1,0 +1,69 @@
+# ================================================================
+# .gitignore — Projet Django ITSS Website
+# ================================================================
+
+# ── Environnement Python ───────────────────────────────────────
+env/
+venv/
+.venv/
+.pyenv/
+*.egg-info/
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ── Cache Python ───────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+
+# ── Variables d'environnement (CRITIQUE : ne jamais versionner) ─
+.env
+
+# ── Bases de données locales ───────────────────────────────────
+db.sqlite3
+*.sqlite3
+*.db
+
+# ── Fichiers média uploadés ────────────────────────────────────
+media/
+
+# ── Fichiers statiques collectés ───────────────────────────────
+staticfiles/
+
+# ── Fichiers logs et temporaires ───────────────────────────────
+*.log
+*.pot
+*.swp
+*.swo
+*.tmp
+
+# ── Archives et backups ───────────────────────────────────────
+*.zip
+*.tar.gz
+*.rar
+backup*/
+
+# ── Node.js / Frontend ────────────────────────────────────────
+node_modules/
+npm-debug.log
+yarn-error.log
+build/
+dist/
+
+# ── IDEs et éditeurs ──────────────────────────────────────────
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# ── OS ─────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ── Django ─────────────────────────────────────────────────────
+*.sql
