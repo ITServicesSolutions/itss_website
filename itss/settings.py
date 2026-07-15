@@ -173,18 +173,25 @@ import MySQLdb.converters
 from decimal import Decimal, InvalidOperation
 
 def custom_decimal_converter(value):
-    if value is None or value == '':
-        return None
+    # On essaie ABSOLUMENT TOUT pour éviter l'erreur
     try:
+        if value is None or value == '' or value == b'':
+            return None
         if isinstance(value, bytes):
-            value = value.decode('utf-8', errors='ignore')
+            value = value.decode('utf-8', errors='replace')
+        # Essayer Decimal d'abord
         return Decimal(value)
-    except (InvalidOperation, TypeError):
-        return None  # ou 0 si vous préférez
+    except Exception:
+        try:
+            # Si ça échoue, essayer float
+            return float(value)
+        except Exception:
+            # Si toujours pas, renvoyer 0.0
+            return 0.0
 
-# Copier les conversions par défaut et remplacer seulement le convertisseur decimal
+# Copier les conversions par défaut et remplacer le convertisseur decimal
 conv = MySQLdb.converters.conversions.copy()
-conv[246] = custom_decimal_converter  # 246 est le code pour DECIMAL/NEWDECIMAL
+conv[246] = custom_decimal_converter
 
 DATABASES = {
     'default': {
