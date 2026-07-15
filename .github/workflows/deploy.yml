@@ -2,8 +2,7 @@
 # FICHIER : .github/workflows/deploy.yml
 # PROJET  : itss_website (Django sur cPanel)
 # RÔLE    : Déploie automatiquement sur cPanel à chaque push
-#           sur la branche "feature-solv", avec backup, migrations
-#           et envoi FTP des fichiers nécessaires uniquement.
+#           sur la branche "feature-solv", avec tests et envoi FTP.
 # ================================================================
 
 name: "🚀 Déploiement Django → cPanel"
@@ -69,98 +68,16 @@ jobs:
           DB_COLLATION: "utf8mb4_0900_ai_ci"
         run: python manage.py test --verbosity=2
 
-  # ──────────────────────────────────────────────────────────────
-  # JOB 2 — BACKUP SSH + MIGRATIONS + COLLECTSTATIC
-  # ──────────────────────────────────────────────────────────────
-  backup-and-migrate:
-    name: "🔒 Backup & Migrations SSH"
-    runs-on: ubuntu-latest
-    needs: tests
-    # Si les tests sont skippés, ce job se lance quand même
-    if: always() && (needs.tests.result == 'success' || needs.tests.result == 'skipped')
 
-    steps:
-      - name: "🔒 Préparer l'hôte SSH"
-        id: prepare_ssh
-        run: |
-          # Nettoyer l'hôte SSH en enlevant tout préfixe de protocole
-          SSH_HOST_CLEAN=$(echo "${{ secrets.SSH_HOST }}" | sed -E 's|^(tcp://|ssh://|https?://)?||; s|/.*$||')
-          echo "ssh_host=${SSH_HOST_CLEAN}" >> $GITHUB_OUTPUT
-      
-      - name: "🔒 Backup backup_N + Migrations + collectstatic"
-        uses: appleboy/ssh-action@v1.2.2
-        with:
-          host: ${{ steps.prepare_ssh.outputs.ssh_host }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: 22
-          command_timeout: 10m
-          script: |
-            set -e
-            echo "══════════════════════════════════════════"
-            echo "  ÉTAPE 1 : Backup automatique backup_N  "
-            echo "══════════════════════════════════════════"
-
-            PROJECT_DIR="/home/c1955546c/public_html/it-servicegroup.com/itss"
-            BACKUP_BASE="/home/c1955546c/public_html/it-servicegroup.com"
-
-            # Déterminer le prochain numéro de backup
-            LAST_N=$(ls -d ${BACKUP_BASE}/backup_* 2>/dev/null | grep -oP 'backup_\K[0-9]+' | sort -n | tail -1)
-            if [ -z "$LAST_N" ]; then
-              NEXT_N=1
-            else
-              NEXT_N=$((LAST_N + 1))
-            fi
-
-            BACKUP_DIR="${BACKUP_BASE}/backup_${NEXT_N}"
-            echo "Création du backup : ${BACKUP_DIR}"
-            cp -r "${PROJECT_DIR}" "${BACKUP_DIR}"
-            echo "✅ Backup backup_${NEXT_N} créé avec succès !"
-
-            echo ""
-            echo "══════════════════════════════════════════"
-            echo "  ÉTAPE 2 : Activation virtualenv         "
-            echo "══════════════════════════════════════════"
-
-            source /home/c1955546c/virtualenv/public_html/it-servicegroup.com/itss/3.9/bin/activate
-            cd /home/c1955546c/public_html/it-servicegroup.com/itss
-
-            echo "Python : $(python --version)"
-            echo "Virtualenv actif : $VIRTUAL_ENV"
-
-            echo ""
-            echo "══════════════════════════════════════════"
-            echo "  ÉTAPE 3 : Migrations Django              "
-            echo "══════════════════════════════════════════"
-
-            python manage.py migrate --noinput
-            echo "✅ Migrations appliquées avec succès !"
-
-            echo ""
-            echo "══════════════════════════════════════════"
-            echo "  ÉTAPE 4 : Collecte des fichiers statiques"
-            echo "══════════════════════════════════════════"
-
-            python manage.py collectstatic --noinput
-            echo "✅ Fichiers statiques collectés !"
-
-            echo ""
-            echo "══════════════════════════════════════════"
-            echo "  ÉTAPE 5 : Redémarrage Passenger          "
-            echo "══════════════════════════════════════════"
-
-            mkdir -p ${PROJECT_DIR}/tmp
-            touch ${PROJECT_DIR}/tmp/restart.txt
-            echo "✅ Passenger redémarré (tmp/restart.txt touché) !"
 
   # ──────────────────────────────────────────────────────────────
-  # JOB 3 — DÉPLOIEMENT FTP (fichiers source Django)
+  # JOB 2 — DÉPLOIEMENT FTP (fichiers source Django)
   # ──────────────────────────────────────────────────────────────
   deploy-files:
     name: "📤 Envoi des fichiers via FTP"
     runs-on: ubuntu-latest
-    needs: backup-and-migrate
-    if: always() && needs.backup-and-migrate.result == 'success'
+    needs: tests
+    if: always() && (needs.tests.result == 'success' || needs.tests.result == 'skipped')
 
     steps:
       - name: "📥 Récupération du code"
@@ -219,12 +136,13 @@ jobs:
             # Fichier .env (les secrets prod sont déjà sur le serveur)
             **/.env
 
-            # Fichiers logs et temporaires
+            # Fichiers logs et temporaires (sauf tmp/restart.txt pour redémarrage Passenger)
             **/*.log
             **/*.pot
             **/*.swp
             **/*.swo
-            **/*.tmp
+            !tmp/
+            !tmp/restart.txt
 
             # Fichiers inutiles en prod
             **/*.zip
@@ -256,6 +174,12 @@ jobs:
             **/backup*/**
             **/backup*.zip
 
+      # ── Créer le fichier de redémarrage Passenger ──
+      - name: "🔄 Créer fichier de redémarrage Passenger"
+        run: |
+          mkdir -p tmp
+          touch tmp/restart.txt
+      
       # ── Réactivation de l'application ───────────────────────
       - name: "🌐 Réactivation et Réveil de l'application (HTTP)"
         run: |

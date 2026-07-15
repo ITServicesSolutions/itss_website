@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'accounts',
     'service',
     'entreprise',
+    'operations',
 
     'phonenumber_field', 
     'rest_framework',
