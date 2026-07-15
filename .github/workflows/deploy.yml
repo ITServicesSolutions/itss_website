@@ -44,10 +44,10 @@ jobs:
           python-version: "3.9"
           cache: "pip"
 
-      - name: "📦 Installation des dépendances système (MySQL)"
+      - name: "📦 Installation des dépendances système (MySQL + Pillow)"
         run: |
           sudo apt-get update
-          sudo apt-get install -y default-libmysqlclient-dev build-essential pkg-config
+          sudo apt-get install -y default-libmysqlclient-dev build-essential pkg-config libjpeg-dev zlib1g-dev libfreetype6-dev libtiff5-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk
 
       - name: "📦 Installation des dépendances Python"
         run: pip install -r requirements.txt
