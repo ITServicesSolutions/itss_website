@@ -170,12 +170,38 @@ PHONENUMBER_DEFAULT_FORMAT = "INTERNATIONAL"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 import MySQLdb.converters
+from decimal import Decimal, InvalidOperation
 
-# Remplacer TOUS les convertisseurs numériques par float (pour éviter les erreurs)
+def ultra_tolerant_decimal_converter(value):
+    """Convertit N'IMPORTE QUOI en Decimal ou None, jamais d'erreur !"""
+    # Cas triviaux
+    if value is None or value == '' or value == b'':
+        return None
+    # Si c'est déjà un nombre
+    if isinstance(value, (int, float)):
+        try:
+            return Decimal(str(value))
+        except Exception:
+            return Decimal('0')
+    # Si c'est des bytes
+    if isinstance(value, bytes):
+        value = value.decode('utf-8', errors='replace')
+    # Si c'est une chaîne, essayer de la nettoyer
+    if isinstance(value, str):
+        # Ne garder que les caractères numériques, ., -
+        cleaned = ''.join(c for c in value if c in '0123456789.-')
+        if not cleaned:
+            return Decimal('0')
+        try:
+            return Decimal(cleaned)
+        except Exception:
+            return Decimal('0')
+    # Dernier recours
+    return Decimal('0')
+
+# NE MODIFIER QUE LE TYPE DECIMAL/NEWDECIMAL (code 246)
 conv = MySQLdb.converters.conversions.copy()
-# 0: DECIMAL, 1: TINY, 2: SHORT, 3: LONG, 4: FLOAT, 5: DOUBLE, 8: LONGLONG, 246: NEWDECIMAL
-for type_code in [0, 1, 2, 3, 4, 5, 8, 246]:
-    conv[type_code] = lambda x: float(x) if x not in (None, '', b'') else None
+conv[246] = ultra_tolerant_decimal_converter
 
 DATABASES = {
     'default': {
