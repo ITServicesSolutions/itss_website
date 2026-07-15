@@ -93,10 +93,10 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
+          protocol: ftp
           port: ${{ secrets.FTP_PORT }}
           server-dir: ${{ secrets.FTP_TARGET }}
-          security: loose
+          security: none
           log-level: verbose
           dangerous-clean-slate: false
           local-dir: ./
