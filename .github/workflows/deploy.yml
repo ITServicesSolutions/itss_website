@@ -96,7 +96,7 @@ jobs:
           protocol: ftp
           port: ${{ secrets.FTP_PORT }}
           server-dir: ${{ secrets.FTP_TARGET }}
-          security: none
+          security: loose
           log-level: verbose
           dangerous-clean-slate: false
           local-dir: ./
