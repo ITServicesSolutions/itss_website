@@ -170,28 +170,12 @@ PHONENUMBER_DEFAULT_FORMAT = "INTERNATIONAL"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 import MySQLdb.converters
-from decimal import Decimal, InvalidOperation
 
-def custom_decimal_converter(value):
-    # On essaie ABSOLUMENT TOUT pour éviter l'erreur
-    try:
-        if value is None or value == '' or value == b'':
-            return None
-        if isinstance(value, bytes):
-            value = value.decode('utf-8', errors='replace')
-        # Essayer Decimal d'abord
-        return Decimal(value)
-    except Exception:
-        try:
-            # Si ça échoue, essayer float
-            return float(value)
-        except Exception:
-            # Si toujours pas, renvoyer 0.0
-            return 0.0
-
-# Copier les conversions par défaut et remplacer le convertisseur decimal
+# Remplacer TOUS les convertisseurs numériques par float (pour éviter les erreurs)
 conv = MySQLdb.converters.conversions.copy()
-conv[246] = custom_decimal_converter
+# 0: DECIMAL, 1: TINY, 2: SHORT, 3: LONG, 4: FLOAT, 5: DOUBLE, 8: LONGLONG, 246: NEWDECIMAL
+for type_code in [0, 1, 2, 3, 4, 5, 8, 246]:
+    conv[type_code] = lambda x: float(x) if x not in (None, '', b'') else None
 
 DATABASES = {
     'default': {
