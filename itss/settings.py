@@ -169,25 +169,10 @@ PHONENUMBER_DEFAULT_FORMAT = "INTERNATIONAL"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-import MySQLdb.converters
-import decimal
-
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.mysql'),
-        'NAME': os.getenv('DB_NAME', ''),
-        'USER': os.getenv('DB_USER', ''),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '3306'),
-        'OPTIONS': {
-            'charset': os.getenv('DB_CHARSET', 'utf8mb4'),
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            'conv': {
-                **MySQLdb.converters.conversions,
-                246: lambda s: decimal.Decimal(s.decode('utf-8')) if s else None,
-            },
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
