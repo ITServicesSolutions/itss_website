@@ -80,10 +80,17 @@ jobs:
     if: always() && (needs.tests.result == 'success' || needs.tests.result == 'skipped')
 
     steps:
+      - name: "🔒 Préparer l'hôte SSH"
+        id: prepare_ssh
+        run: |
+          # Nettoyer l'hôte SSH en enlevant tout préfixe de protocole
+          SSH_HOST_CLEAN=$(echo "${{ secrets.SSH_HOST }}" | sed -E 's|^(tcp://|ssh://|https?://)?||; s|/.*$||')
+          echo "ssh_host=${SSH_HOST_CLEAN}" >> $GITHUB_OUTPUT
+      
       - name: "🔒 Backup backup_N + Migrations + collectstatic"
         uses: appleboy/ssh-action@v1.2.2
         with:
-          host: ${{ secrets.SSH_HOST }}
+          host: ${{ steps.prepare_ssh.outputs.ssh_host }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: 22
