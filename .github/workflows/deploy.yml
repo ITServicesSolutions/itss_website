@@ -88,7 +88,7 @@ jobs:
       # de Django en production. La liste d'exclusion ci-dessous
       # protège la BDD de prod et les fichiers sensibles.
       - name: "📤 Déploiement FTP vers cPanel"
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.7
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USER }}
