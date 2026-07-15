@@ -88,89 +88,61 @@ jobs:
       # de Django en production. La liste d'exclusion ci-dessous
       # protège la BDD de prod et les fichiers sensibles.
       - name: "📤 Déploiement FTP vers cPanel"
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.7
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           port: ${{ secrets.FTP_PORT }}
+          server-dir: ${{ secrets.FTP_TARGET }}
           security: loose
           log-level: verbose
-
-          # ⚠️ Première fois après un échec mid-upload : repart de zéro.
-          # → Mettre à false après un déploiement réussi.
           dangerous-clean-slate: false
-
-          # ── Dossier local à envoyer ──────────────────────────
-          local-dir: ./                   # Racine du projet local
-
-          # ── Dossier cible sur cPanel ─────────────────────────
-          # Utilise le secret FTP_TARGET pour le chemin distant
-          server-dir: ${{ secrets.FTP_TARGET }}
-
-          # ── Fichiers et dossiers EXCLUS de l'envoi ───────────
-          # Tout ce qui est listé ici ne sera JAMAIS envoyé sur le serveur.
+          local-dir: ./
+          timeout: 300000              # Temps max par opération (5 min en ms)
+          retry-count: 5               # Nombre de tentatives en cas d'échec
+          retry-delay: 10000           # Délai entre les réessais (10 secondes)
           exclude: |
             **/.git*
             **/.git*/**
-
-            # Environnement virtuel local (recréé sur le serveur)
             **/env/**
             **/venv/**
             **/.venv/**
             **/.pyenv/**
-
-            # Cache Python (inutile et volumineux)
             **/__pycache__/**
             **/*.py[cod]
             **/*$py.class
             **/*.pyc
             **/*.pyo
-
-            # Base de données locale SQLite & autres BD (CRITIQUE)
             **/db.sqlite3
             **/*.sqlite3
             **/*.db
-
-            # Fichier .env (les secrets prod sont déjà sur le serveur)
             **/.env
-
-            # Fichiers logs et temporaires (sauf tmp/restart.txt pour redémarrage Passenger)
             **/*.log
             **/*.pot
             **/*.swp
             **/*.swo
             !tmp/
             !tmp/restart.txt
-
-            # Fichiers inutiles en prod
             **/*.zip
             **/*.tar.gz
             **/Readme.md
             **/README.md
             **/README-CICD.md
             **/*.sql
-
-            # Dossiers Django générés ou propres au serveur
             **/staticfiles/**
             **/media/**
-
-            # Dossier Node / Frontend
             **/node_modules/**
             **/npm-debug.log
             **/yarn-error.log
             **/build/**
             **/dist/**
-
-            # IDEs & éditeurs
             **/.vscode/**
             **/.idea/**
             **/*.code-workspace
             **/.DS_Store
             **/Thumbs.db
-
-            # Backups (ne jamais renvoyer les backups)
             **/backup*/**
             **/backup*.zip
 
