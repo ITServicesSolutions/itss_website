@@ -169,53 +169,10 @@ PHONENUMBER_DEFAULT_FORMAT = "INTERNATIONAL"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-import MySQLdb.converters
-from decimal import Decimal, InvalidOperation
-
-def ultra_tolerant_decimal_converter(value):
-    """Convertit N'IMPORTE QUOI en Decimal ou None, jamais d'erreur !"""
-    # Cas triviaux
-    if value is None or value == '' or value == b'':
-        return None
-    # Si c'est déjà un nombre
-    if isinstance(value, (int, float)):
-        try:
-            return Decimal(str(value))
-        except Exception:
-            return Decimal('0')
-    # Si c'est des bytes
-    if isinstance(value, bytes):
-        value = value.decode('utf-8', errors='replace')
-    # Si c'est une chaîne, essayer de la nettoyer
-    if isinstance(value, str):
-        # Ne garder que les caractères numériques, ., -
-        cleaned = ''.join(c for c in value if c in '0123456789.-')
-        if not cleaned:
-            return Decimal('0')
-        try:
-            return Decimal(cleaned)
-        except Exception:
-            return Decimal('0')
-    # Dernier recours
-    return Decimal('0')
-
-# NE MODIFIER QUE LE TYPE DECIMAL/NEWDECIMAL (code 246)
-conv = MySQLdb.converters.conversions.copy()
-conv[246] = ultra_tolerant_decimal_converter
-
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.mysql'),
-        'NAME': os.getenv('DB_NAME', ''),
-        'USER': os.getenv('DB_USER', ''),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '3306'),
-        'OPTIONS': {
-            'charset': os.getenv('DB_CHARSET', 'utf8mb4'),
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            'conv': conv,
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
